@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         cacheResult="false"
+         stopOnFailure="false">
+    <testsuites>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/</directory>
+        </testsuite>
+    </testsuites>
+    <logging>
+        <log type="coverage-html" target="./coverage/coverage"/>
+        <log type="testdox-html" target="./coverage/tests.html"/>
+        <log type="coverage-clover" target="./coverage/coverage.xml"/>
+    </logging>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src/</directory>
+            <exclude>
+            </exclude>
+        </whitelist>
+    </filter>
+    <php>
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
+        <env name="APP_ENV" value="testing"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="MAIL_DRIVER" value="array"/>
+    </php>
+</phpunit>

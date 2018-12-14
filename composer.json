@@ -1,0 +1,42 @@
+{
+  "name": "myerscode/laravel-taxonomy",
+  "homepage": "https://github.com/myerscode/laravel-taxonomies",
+  "description": "A package to bring simple taxonomy relationships to Laravel models",
+  "keywords": [
+    "taxonomy",
+    "terms",
+    "tags"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "myerscode",
+      "email": "team@myerscode.com",
+      "homepage": "https://myerscode.com"
+    },
+    {
+      "name": "Fred Myerscough",
+      "email": "fred@myerscough.co.uk",
+      "homepage": "https://fredmyerscough.co.uk"
+    }
+  ],
+  "require": {
+    "php": "~7.0",
+    "myerscode/utilities-strings": "^1.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "~3.6.0",
+    "phpunit/phpunit": "^7.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Myerscode\\Laravel\\Taxonomies\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  }
+}
