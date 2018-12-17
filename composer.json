@@ -1,11 +1,15 @@
 {
-  "name": "myerscode/laravel-taxonomy",
+  "name": "myerscode/laravel-taxonomies",
   "homepage": "https://github.com/myerscode/laravel-taxonomies",
   "description": "A package to bring simple taxonomy relationships to Laravel models",
   "keywords": [
     "taxonomy",
     "terms",
-    "tags"
+    "tags",
+    "php",
+    "eloquent",
+    "laravel",
+    "lumen"
   ],
   "type": "library",
   "license": "MIT",
