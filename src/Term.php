@@ -4,14 +4,16 @@ namespace Myerscode\Laravel\Taxonomies;
 
 class Term extends Model
 {
+
     protected $fillable = [
         'slug',
         'name',
+        'taxonomy_id',
     ];
 
     /**
      * Add a term to a given taxonomy
-     * 
+     *
      * @param $term
      * @param $taxonomy
      * @return self

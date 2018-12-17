@@ -23,7 +23,8 @@
   ],
   "require": {
     "php": "~7.0",
-    "myerscode/utilities-strings": "^1.0"
+    "myerscode/utilities-strings": "^1.0",
+    "myerscode/utilities-bags": "^1.0"
   },
   "require-dev": {
     "orchestra/testbench": "~3.6.0",
