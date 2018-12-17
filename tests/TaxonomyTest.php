@@ -27,6 +27,16 @@ class TaxonomyTest extends TestCase
         $this->assertCount(2, Taxonomy::all());
     }
 
+    public function testAddTaxonomy()
+    {
+        Taxonomy::add('Foo');
+        Taxonomy::add('Bar');
+        Taxonomy::add('Hello World');
+        Taxonomy::add(['Foo', 'Bar']);
+
+        $this->assertCount(3, Taxonomy::all());
+    }
+
     public function testAttachTermToTaxonomy()
     {
 

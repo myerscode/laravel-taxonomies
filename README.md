@@ -7,7 +7,7 @@
 
 ## Why is this package helpful?
 
-This package ensures your API will always return the same envelope shape, so consuming apps always know what to expect!
+This package allow you to create taxonomies and terms and relate them to Laravel models.
 
 ## Install
 
@@ -35,7 +35,7 @@ Publish the config file with:
 php artisan vendor:publish --provider="Myerscode\Laravel\Taxonomies\ServiceProvider" --tag="config"
 ```
 
-## Usage
+## [Usage](docs/model.md)
 
 To make an Eloquent model taggable just add the `\Myerscode\Laravel\Taxonomies\HasTaxonomy` trait to it:
 ```php
@@ -47,52 +47,21 @@ class Post extends Model
 }
 ```
 
-### Creating Terms
 
-You can create a simple term using the `add` helper method, and passing in a name. A slug of the name will be created for you.
-```php
-Term::add('Foo');
-```
+## [Terms](docs/terms.md)
 
-You can create a term with an alternative slug by passing in a data array, the same as using the `create` helper method.
-```php
-Term::add(['slug' => 'bar', 'name' => 'Foo']);
-```
+Are the meta tags you want to add to your model, giving them a definable characteristic.
 
-### Adding terms to a model
 
-You can add a single tag:
-```php
-$model->addTag('Foo');
-```
+## [Taxonomies](docs/taxonomies.md)
 
-You can add a multiple tag:
-```php
-$model->addTags(['Hello', 'World']);
-```
+Are are a way of grouping your terms together, categorising your collection.
 
-You can sync tag:
-```php
-$model->syncTags('Foo');
-$model->syncTags(['Hello', 'World']);
-```
+For example a `Taxonomy` called `Colours` could contain terms such as `Red`, `Yellow`, `Green` and `Blue`. 
 
-You can remove tags:
-```php
-$model->detachTags(['Hello', 'World']);
-$model->detachTags('Foo');
-```
 
-### Associating Tags
 
-You can associate a new tag with a taxonomy or move association to another taxonomy
-```php
-$tag = Tag::create(['name' => 'Foo']);
-$taxonomy->attachTag($tag);
-$anotherTaxonomy->attachTag($tag);
-// $tag is now associated to $anotherTaxonomy
-```
+
 
 ## License
-
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
