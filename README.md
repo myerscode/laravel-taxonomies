@@ -60,7 +60,9 @@ Are are a way of grouping your terms together, categorising your collection.
 For example a `Taxonomy` called `Colours` could contain terms such as `Red`, `Yellow`, `Green` and `Blue`. 
 
 
+## [Localisation](docs/localisation.md)
 
+You can get translated names from your terms and taxonomies by setting localised language files.
 
 
 ## License

@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
-//    use RefreshDatabase;
+    use RefreshDatabase;
 
     protected function getPackageProviders($app)
     {
@@ -22,11 +22,29 @@ class TestCase extends Orchestra
     {
         parent::setUp();
         $this->createDatabase($this->app);
+        $this->loadLocales($this->app);
     }
 
     public function createDatabase(Application $app)
     {
+        foreach (glob(dirname(__DIR__) . '/src/Stubs/migrations/' . '*.php') as $filename) {
+            include_once $filename;
+        }
         $this->loadMigrationsFrom(__DIR__ . '/Support/migrations');
+    }
+
+    public function loadLocales(Application $app)
+    {
+
+        $this->app['translator']->addLines([
+            'terms.foo-bar' => 'Foo La La',
+            'taxonomies.hello-world' => 'Bonjour le monde',
+        ], 'fr');
+
+        $this->app['translator']->addLines([
+            'terms.foo-bar' => 'Tymor un',
+            'taxonomies.hello-world' => 'Helo Byd',
+        ], 'cy');
     }
 
     /**

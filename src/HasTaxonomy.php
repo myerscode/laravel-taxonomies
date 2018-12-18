@@ -79,7 +79,7 @@ trait HasTaxonomy
                 }
             }
             return $term::firstOrCreate($findBy, ['name' => $name]);
-        });;
+        });
 
         return $terms;
     }
@@ -125,5 +125,4 @@ trait HasTaxonomy
     {
         return self::hasAllTerms($terms, $taxonomy)->get();
     }
-
 }
