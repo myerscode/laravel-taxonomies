@@ -67,4 +67,17 @@ class Model extends LaravelModel
 
         throw new UnsupportedModelDataException();
     }
+
+    /**
+     * Convert a model into a translatable instance of itself
+     *
+     * @param $lang
+     * @return Translated
+     */
+    public function translate($lang = null)
+    {
+        $lang = $lang ?? app()->getLocale();
+
+        return new Translated($lang, $this);
+    }
 }

@@ -32,7 +32,6 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function register()
     {
-
     }
 
     /**
