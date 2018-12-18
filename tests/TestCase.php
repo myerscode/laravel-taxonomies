@@ -27,6 +27,9 @@ class TestCase extends Orchestra
 
     public function createDatabase(Application $app)
     {
+        foreach (glob(dirname(__DIR__) . '/src/Stubs/migrations/' . '*.php') as $filename) {
+            include_once $filename;
+        }
         $this->loadMigrationsFrom(__DIR__ . '/Support/migrations');
     }
 
