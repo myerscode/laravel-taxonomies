@@ -45,5 +45,12 @@
     "psr-4": {
       "Tests\\": "tests/"
     }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Myerscode\\Laravel\\Taxonomies\\ServiceProvider"
+      ]
+    }
   }
 }
