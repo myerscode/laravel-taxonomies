@@ -15,11 +15,11 @@ class ServiceProvider extends LaravelServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $timestamp = date('Y_m_d_His', time());
+            $timestamp = date('Y_m_d_', time());
             $this->publishes([
-                __DIR__ . '/Stubs/migrations/create_taggables_table.php' => database_path('migrations/' . $timestamp . '_create_taggables_table.php'),
-                __DIR__ . '/Stubs/migrations/create_taxonomies_table.php' => database_path('migrations/' . $timestamp . '_create_taxonomies_table.php'),
-                __DIR__ . '/Stubs/migrations/create_terms_table.php' => database_path('migrations/' . $timestamp . '_create_terms_table.php'),
+                __DIR__ . '/Stubs/migrations/create_taxonomies_table.php' => database_path('migrations/' . $timestamp . '000000_create_taxonomies_table.php'),
+                __DIR__ . '/Stubs/migrations/create_terms_table.php' => database_path('migrations/' . $timestamp . '100000_create_terms_table.php'),
+                __DIR__ . '/Stubs/migrations/create_taggables_table.php' => database_path('migrations/' . $timestamp . '200000_create_taggables_table.php'),
             ], 'migrations');
             $this->publishes([__DIR__ . '/Stubs/config.php' => config_path('taxonomies.php')], 'config');
         }
