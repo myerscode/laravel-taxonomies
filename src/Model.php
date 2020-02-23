@@ -5,6 +5,7 @@ namespace Myerscode\Laravel\Taxonomies;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Myerscode\Laravel\Taxonomies\Exceptions\UnsupportedModelDataException;
 use Myerscode\Utilities\Bags\Utility as Bag;
+use Myerscode\Utilities\Strings\Utility as Strings;
 
 class Model extends LaravelModel
 {
@@ -15,7 +16,7 @@ class Model extends LaravelModel
 
         static::creating(function (Model $model) {
             if (empty($model->slug)) {
-                $model->slug = str_slug($model->name);
+                $model->slug = (string)(new Strings($model->name))->toSlug();
             }
         });
     }
@@ -60,7 +61,7 @@ class Model extends LaravelModel
             return static::firstOrCreate($data);
         } else {
             if (is_string($data)) {
-                $slug = str_slug($data);
+                $slug = (string)(new Strings($data))->toSlug();
                 return static::firstOrCreate(['slug' => $slug], ['name' => $data]);
             }
         }
