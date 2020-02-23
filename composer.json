@@ -28,7 +28,8 @@
     }
   ],
   "require": {
-    "php": "~7.0",
+    "php": "^7.2",
+    "laravel/framework": "^6.0",
     "myerscode/utilities-strings": "^1.0",
     "myerscode/utilities-bags": "^1.0"
   },
