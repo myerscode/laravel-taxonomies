@@ -14,44 +14,44 @@ Term::add(['slug' => 'bar', 'name' => 'Foo']);
 
 ## Adding terms to a model
 
-You can add a single tag:
+You can add a single term:
 ```php
-$model->addTag('Foo');
-$model->addTag('Bar');
+$model->addTerm('Foo');
+$model->addTerm('Bar');
 // $model would now have the tags Foo and Bar
 ```
 
-You can add a multiple tag:
+You can add a multiple term:
 ```php
-$model->addTags(['Hello', 'World']);
+$model->addTerms(['Hello', 'World']);
 // $model would now have the tags  Hello and World
 ```
 
-You can sync tag:
+You can sync term:
 ```php
-$model->syncTags('Foo');
+$model->syncTerms('Foo');
 // $model would now only have the tag Foo
 
-$model->syncTags(['Hello', 'World']);
+$model->syncTerms(['Hello', 'World']);
 // $model would now only have the tags Hello and World
 ```
 
-You can remove tags:
+You can remove terms:
 ```php
-$model->detachTags(['Hello', 'World']);
-$model->detachTags('Foo');
+$model->detachTerms(['Hello', 'World']);
+$model->detachTerms('Foo');
 ```
 
 ## Associating Terms to a Taxonomy
 
 By default terms do not get added to a taxonomy, but you can associate a new term or move association of an existing term to any taxonomy.
 ```php
-$tag = Tag::create('Foo');
+$tag = Term::create('Foo');
 $taxonomy->attachTerms($tag);
 $anotherTaxonomy->attachTerms($tag);
 ```
 ```php
-$tag = Tag::find('Foo');
+$tag = Term::find('Foo');
 $anotherTaxonomy->attachTerms($tag);
 ```
 

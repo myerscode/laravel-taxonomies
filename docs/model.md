@@ -26,7 +26,7 @@ $taxonomy = Taxonomy::findOrNew('Foo Bar');
 $post->addTerm('term abc', $taxonomy);
 ```
 
-## Finding models with tags
+## Finding models with terms
 
 ### withAnyTerms
 

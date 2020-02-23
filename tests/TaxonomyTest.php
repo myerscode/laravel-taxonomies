@@ -13,7 +13,7 @@ class TaxonomyTest extends TestCase
      */
     protected $taxonomy;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -32,6 +32,9 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(
+            __DIR__ . '/Stubs/config.php', 'taxonomies'
+        );
     }
 
     /**
