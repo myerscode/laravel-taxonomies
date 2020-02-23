@@ -14,7 +14,7 @@ class HasTaxonomyTest extends TestCase
      */
     protected $post;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -33,8 +33,9 @@
     "myerscode/utilities-bags": "^1.0"
   },
   "require-dev": {
-    "orchestra/testbench": "~3.6.0",
-    "phpunit/phpunit": "^7.3"
+    "mockery/mockery": "^1.2",
+    "orchestra/testbench": "^3.8",
+    "phpunit/phpunit": "^8.2"
   },
   "autoload": {
     "psr-4": {
