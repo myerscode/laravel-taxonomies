@@ -28,15 +28,15 @@
     }
   ],
   "require": {
-    "php": "^7.2",
-    "laravel/framework": "^6.0",
+    "php": "^7.4",
+    "laravel/framework": "^7.0",
     "myerscode/utilities-strings": "^1.0",
     "myerscode/utilities-bags": "^1.0"
   },
   "require-dev": {
     "mockery/mockery": "^1.2",
-    "orchestra/testbench": "^3.8",
-    "phpunit/phpunit": "^8.2"
+    "orchestra/testbench": "^5.0",
+    "phpunit/phpunit": "^9.0"
   },
   "autoload": {
     "psr-4": {
@@ -54,5 +54,9 @@
         "Myerscode\\Laravel\\Taxonomies\\ServiceProvider"
       ]
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
   }
 }
