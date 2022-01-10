@@ -1,0 +1,27 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  run:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        php-versions: ['7.3', '7.4', '8.0', '8.1']
+
+    name: PHP ${{ matrix.php-versions }} - ${{ matrix.os }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+        coverage: xdebug
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-interaction
+    - name: Run test suite
+      run: vendor/bin/phpunit --testdox --coverage-html coverage
