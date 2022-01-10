@@ -31,7 +31,8 @@
     "php": "^7.3|^8.0",
     "laravel/framework": "^8.0",
     "myerscode/utilities-strings": "^1.0",
-    "myerscode/utilities-bags": "^1.0"
+    "myerscode/utilities-bags": "^1.0",
+    "squizlabs/php_codesniffer": "^3.6"
   },
   "require-dev": {
     "mockery/mockery": "^1.2",
@@ -56,7 +57,8 @@
     }
   },
   "scripts": {
-    "test": "vendor/bin/phpunit",
-    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    "tests": "vendor/bin/phpunit --testdox --no-coverage --colors=always",
+    "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --testdox --colors=always",
+    "phpcs": "vendor/bin/phpcs src tests --standard=PSR12"
   }
 }
