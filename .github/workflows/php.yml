@@ -21,6 +21,7 @@ jobs:
       with:
         php-version: ${{ matrix.php-versions }}
         coverage: xdebug
+        extensions: fileinfo, pdo_sqlite, sqlite3
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-interaction
     - name: Run test suite
