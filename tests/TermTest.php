@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Myerscode\Laravel\Taxonomies\Exceptions\UnsupportedModelDataException;
+use Myerscode\Laravel\Taxonomies\Taxonomy;
 use Myerscode\Laravel\Taxonomies\Term;
 
 class TermTest extends TestCase
@@ -60,6 +61,15 @@ class TermTest extends TestCase
         Term::addToTaxonomy('Foo', 'Bar');
 
         $this->assertCount(2, Term::all());
+    }
+
+    public function testTermBelongsToTaxonomy()
+    {
+        Term::addToTaxonomy('Hello', 'World');
+        $term = Term::findByName('Hello');
+
+        $this->assertInstanceOf(Taxonomy::class, $term->taxonomy);
+        $this->assertEquals('World', $term->taxonomy->name);
     }
 
 }
