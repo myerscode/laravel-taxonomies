@@ -23,10 +23,10 @@ return [
 
 ```php
 $term = Taxonomy::add('Hello World');
-$term->translate('fr')->name
-// Returns Bonjour le monde
+$term->translate('fr')->name;
+// Returns "Bonjour le monde"
 
-$term = Term::add('Term One);
-$term->translate('fr')->name
-// Returns Terme un
+$term = Term::add('Term One');
+$term->translate('fr')->name;
+// Returns "Terme un"
 ```

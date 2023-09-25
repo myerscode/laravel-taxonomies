@@ -56,3 +56,18 @@ $anotherTaxonomy->attachTerms($tag);
 ```
 
 The $tag with name `Foo` is now associated to the `$anotherTaxonomy`.
+
+## Get the taxonomy associated to a term
+
+```php
+$tag = Term::create('Foo');
+$taxonomy->attachTerms($tag);
+$tag->taxonomy;
+```
+
+```php
+$tag = Term::create('Foo');
+$taxonomy->attachTerms($tag);
+$tag->taxonomy->slug;
+```
+
