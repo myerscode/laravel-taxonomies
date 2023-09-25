@@ -56,3 +56,13 @@ $anotherTaxonomy->attachTerms($tag);
 ```
 
 The $tag with name `Foo` is now associated to the `$anotherTaxonomy`.
+
+## Term Taxonomy
+
+When you have a term object you can get all the information associated with it!
+
+Call the `taxonomy` property and this an instance of `Term` or will be `null` if it has not been assigned to it.
+
+```php
+$taxonomy = $term->taxonomy;
+```
