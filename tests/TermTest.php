@@ -70,6 +70,10 @@ class TermTest extends TestCase
 
         $this->assertInstanceOf(Taxonomy::class, $term->taxonomy);
         $this->assertEquals('World', $term->taxonomy->name);
+
+        $term = Term::add('Foo');
+
+        $this->assertNull($term->taxonomy);
     }
 
 }
