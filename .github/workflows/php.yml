@@ -24,7 +24,7 @@ jobs:
             testbench: ^5.*
         exclude:
           - laravel: 10.*
-            php: 8.0
+            php-versions: 8.0
     name: PHP ${{ matrix.php-versions }} - Laravel ${{ matrix.laravel }} - ${{ matrix.os }}
     steps:
     - name: Checkout
