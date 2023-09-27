@@ -55,3 +55,15 @@ Post::hasAllTerms(['term 1', 'term 2'], 'foo-bar');
 ```
 
 It can be used as a Query Builder scope by using  `$builder->hasAllTerms(['term 1', 'term 2'], 'foo-bar')`.
+
+## Eager Loading
+
+You can eager loading terms and taxonomies
+
+```php
+// eager load terms for Post entity
+Post::with('terms')->get();
+
+// eager load terms and taxonomies for Post entity
+Post::with('terms.taxonomy')->get();
+```
