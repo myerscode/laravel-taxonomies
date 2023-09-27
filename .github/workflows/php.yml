@@ -7,12 +7,25 @@ on:
 jobs:
   run:
     runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php-versions: ['7.3', '7.4', '8.0', '8.1', '8.2']
-
-    name: PHP ${{ matrix.php-versions }} - ${{ matrix.os }}
+        php-versions: [ 7.3, 7.4, 8.0, 8.1, 8.2]
+        laravel: [ 10.*, 9.*, 8.*, 7.* ]
+        include:
+          - laravel: 10.*
+            testbench: 8.*
+          - laravel: 9.*
+            testbench: 7.*
+          - laravel: 8.*
+            testbench: ^6.*
+          - laravel: 7.*
+            testbench: ^5.*
+        exclude:
+          - laravel: 10.*
+            php: 8.0
+    name: PHP ${{ matrix.php-versions }} - Laravel ${{ matrix.laravel }} - ${{ matrix.os }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -23,6 +36,8 @@ jobs:
         coverage: xdebug
         extensions: fileinfo, pdo_sqlite, sqlite3
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-interaction
+      run: |
+        composer require "laravel/framework:${{ matrix.laravel }}" "nesbot/carbon:^2.63" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+        composer update --prefer-stable --prefer-dist --no-interaction --no-suggest
     - name: Run test suite
       run: vendor/bin/phpunit --testdox --coverage-html coverage
