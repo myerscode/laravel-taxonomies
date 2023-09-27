@@ -2,6 +2,8 @@
 
 namespace Myerscode\Laravel\Taxonomies;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class Term extends Model
 {
 
@@ -26,5 +28,13 @@ class Term extends Model
         Taxonomy::findOrAdd($taxonomy)->attachTerm($terms);
 
         return new static;
+    }
+
+    /**
+     * Taxonomy associated with the term
+     */
+    public function taxonomy(): BelongsTo
+    {
+        return $this->belongsTo(Taxonomy::class);
     }
 }

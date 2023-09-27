@@ -21,21 +21,17 @@ class TestCase extends Orchestra
     public function setUp(): void
     {
         parent::setUp();
-        $this->createDatabase($this->app);
         $this->loadLocales($this->app);
     }
 
-    public function createDatabase(Application $app)
+    protected function defineDatabaseMigrations()
     {
-        foreach (glob(dirname(__DIR__) . '/src/Stubs/migrations/' . '*.php') as $filename) {
-            include_once $filename;
-        }
+        $this->loadMigrationsFrom(__DIR__ . '/../src/Stubs/migrations');
         $this->loadMigrationsFrom(__DIR__ . '/Support/migrations');
     }
 
     public function loadLocales(Application $app)
     {
-
         $this->app['translator']->addLines([
             'terms.foo-bar' => 'Foo La La',
             'taxonomies.hello-world' => 'Bonjour le monde',
