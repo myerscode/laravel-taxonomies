@@ -29,7 +29,7 @@ class Model extends LaravelModel
      */
     public static function findBySlug(string $slug)
     {
-        return self::where('slug', '=', $slug)->get()->first();
+        return self::where('slug', '=', $slug)->first();
     }
 
     /**
@@ -40,7 +40,7 @@ class Model extends LaravelModel
      */
     public static function findByName(string $name)
     {
-        return self::where('name', '=', $name)->get()->first();
+        return self::where('name', '=', $name)->first();
     }
 
     /**
