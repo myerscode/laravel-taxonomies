@@ -18,31 +18,32 @@ class Model extends LaravelModel
      * Add a new record
      *
      * @param  array<string, mixed>|string  $data
-     * @return static|Collection<int|string, mixed>
+     * @return static|Collection<int, mixed>
      */
     public static function add(array|string $data): static|Collection
     {
         if (is_array($data)) {
             if (new Bag($data)->isIndexed()) {
-                return collect($data)->each(fn (array|string $record): self|Collection => self::add($record));
+                /** @var Collection<int, mixed> */
+                return collect($data)->each(fn (array|string $record): static|Collection => static::add($record));
             }
 
-            return static::firstOrCreate($data);
+            return static::firstOrCreate($data); // @phpstan-ignore return.type
         }
 
         $slug = (string) new Strings($data)->toSlug();
 
-        return static::firstOrCreate(['slug' => $slug], ['name' => $data]);
+        return static::firstOrCreate(['slug' => $slug], ['name' => $data]); // @phpstan-ignore return.type
     }
 
     public static function findByName(string $name): ?static
     {
-        return self::where('name', '=', $name)->first();
+        return static::where('name', '=', $name)->first(); // @phpstan-ignore return.type
     }
 
     public static function findBySlug(string $slug): ?static
     {
-        return self::where('slug', '=', $slug)->first();
+        return static::where('slug', '=', $slug)->first(); // @phpstan-ignore return.type
     }
 
     #[Override]

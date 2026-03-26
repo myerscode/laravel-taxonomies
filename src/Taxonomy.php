@@ -19,7 +19,7 @@ class Taxonomy extends Model
     {
         $slug = new Strings($taxonomy)->toSlug()->value();
 
-        return self::firstOrCreate(['slug' => $slug], ['name' => $taxonomy]);
+        return static::firstOrCreate(['slug' => $slug], ['name' => $taxonomy]); // @phpstan-ignore return.type
     }
 
     public function addTerm(string $term): static

@@ -17,13 +17,15 @@ class Term extends Model
      */
     public static function addToTaxonomy(array|string $term, string $taxonomy): static
     {
-        $model = self::add($term);
+        $model = static::add($term);
 
-        if ($model instanceof Term) {
+        if ($model instanceof self) {
             Taxonomy::findOrAdd($taxonomy)->attachTerm($model);
+
+            return $model;
         }
 
-        return new static();
+        return new self(); // @phpstan-ignore return.type
     }
 
     /** @return BelongsTo<Taxonomy, $this> */

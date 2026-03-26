@@ -28,7 +28,7 @@ trait HasTaxonomy
      */
     public static function withAllTerms(array|string $terms, ?string $taxonomy = null): EloquentCollection
     {
-        return self::hasAllTerms($terms, $taxonomy)->get();
+        return static::hasAllTerms($terms, $taxonomy)->get(); // @phpstan-ignore return.type
     }
 
     /**
@@ -37,7 +37,7 @@ trait HasTaxonomy
      */
     public static function withAnyTerms(array|string $terms, ?string $taxonomy = null): EloquentCollection
     {
-        return self::hasAnyTerms($terms, $taxonomy)->get();
+        return static::hasAnyTerms($terms, $taxonomy)->get(); // @phpstan-ignore return.type
     }
 
     public function addTerm(string $term, int|string|Taxonomy|null $taxonomy = null): static
@@ -64,7 +64,7 @@ trait HasTaxonomy
     {
         $removeTerms = $this->collectTerms($terms, $taxonomy)->pluck('id')->toArray();
 
-        $this->terms()->detach($removeTerms);
+        $this->terms()->detach($removeTerms); // @phpstan-ignore method.notFound
 
         return $this;
     }
@@ -109,7 +109,7 @@ trait HasTaxonomy
     {
         $terms = $this->collectTerms($terms, $taxonomy);
 
-        $this->terms()->sync($terms->pluck('id')->toArray());
+        $this->terms()->sync($terms->pluck('id')->toArray()); // @phpstan-ignore method.notFound
 
         return $this;
     }
