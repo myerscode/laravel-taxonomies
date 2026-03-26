@@ -31,14 +31,14 @@
     "php": "^8.3",
     "illuminate/database": "^13.0",
     "illuminate/support": "^13.0",
-    "myerscode/utilities-strings": "^1.0",
-    "myerscode/utilities-bags": "^1.0"
+    "myerscode/utilities-strings": "^2026.0",
+    "myerscode/utilities-bags": "^2026.0"
 
   },
   "require-dev": {
     "mockery/mockery": "^1.2",
     "orchestra/testbench": "^11.0",
-    "phpunit/phpunit": "^11.5",
+    "phpunit/phpunit": "^13.0",
     "squizlabs/php_codesniffer": "^3.6"
   },
   "autoload": {
