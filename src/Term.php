@@ -13,24 +13,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Term extends Model
 {
     /**
-     * Add a term to a given taxonomy
-     *
-     * @param $term
-     * @param $taxonomy
-     * @throws Exceptions\UnsupportedModelDataException
+     * @param  array<string, mixed>|string  $term
      */
-    public static function addToTaxonomy($term, string $taxonomy): self
+    public static function addToTaxonomy(array|string $term, string $taxonomy): static
     {
         $model = self::add($term);
 
-        Taxonomy::findOrAdd($taxonomy)->attachTerm($model);
+        if ($model instanceof Term) {
+            Taxonomy::findOrAdd($taxonomy)->attachTerm($model);
+        }
 
         return new static();
     }
 
-    /**
-     * Taxonomy associated with the term
-     */
+    /** @return BelongsTo<Taxonomy, $this> */
     public function taxonomy(): BelongsTo
     {
         return $this->belongsTo(Taxonomy::class);

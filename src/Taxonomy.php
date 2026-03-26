@@ -15,28 +15,20 @@ class Taxonomy extends Model
 {
     use HasTaxonomy;
 
-    /**
-     * @return Taxonomy
-     */
-    public static function findOrAdd(string $taxonomy)
+    public static function findOrAdd(string $taxonomy): static
     {
         $slug = (new Strings($taxonomy))->toSlug()->value();
 
         return self::firstOrCreate(['slug' => $slug], ['name' => $taxonomy]);
     }
 
-    /**
-     * Find or create a term and attach it to the taxonomy
-     */
     public function addTerm(string $term): static
     {
         return $this->addTerms([$term]);
     }
 
     /**
-     * Find or create terms and attach it to the taxonomy
-     *
-     * @return $this
+     * @param  array<int, string>  $terms
      */
     public function addTerms(array $terms): static
     {
@@ -47,34 +39,22 @@ class Taxonomy extends Model
         return $this;
     }
 
-    /**
-     * Attach a known term to the taxonomy
-     *
-     * @return $this
-     */
     public function attachTerm(Term $term): static
     {
-        return $this->attachTerms([$term]);
+        return $this->attachTerms(collect([$term]));
     }
 
     /**
-     * Attach known terms to the taxonomy
-     *
-     * @param Collection | Term[] $attach | Term $attach
-     * @return $this
+     * @param  Collection<int, Term>  $attach
      */
-    public function attachTerms($attach): static
+    public function attachTerms(Collection $attach): static
     {
-        $terms = collect($attach)->filter(fn ($term): bool => $term instanceof Term);
-
-        $this->terms()->saveMany($terms);
+        $this->terms()->saveMany($attach);
 
         return $this;
     }
 
-    /**
-     * Terms associated with the taxonomy
-     */
+    /** @return HasMany<Term, $this> */
     public function terms(): HasMany
     {
         return $this->hasMany(Term::class);

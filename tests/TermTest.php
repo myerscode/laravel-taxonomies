@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Myerscode\Laravel\Taxonomies\Exceptions\UnsupportedModelDataException;
 use Myerscode\Laravel\Taxonomies\Taxonomy;
 use Myerscode\Laravel\Taxonomies\Term;
 use stdClass;
@@ -74,7 +73,7 @@ final class TermTest extends TestCase
 
     public function testUnsupportedTermDataThrowsException(): void
     {
-        $this->expectException(UnsupportedModelDataException::class);
+        $this->expectException(\TypeError::class);
         Term::add(new stdClass());
     }
 

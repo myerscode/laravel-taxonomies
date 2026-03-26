@@ -6,6 +6,7 @@ use Override;
 
 class Translated extends Model
 {
+    /** @var list<string> */
     protected $fillable = [];
 
     protected string $locale = '';
@@ -15,7 +16,7 @@ class Translated extends Model
     public function __construct(string $locale = '', ?Model $model = null)
     {
         if ($model instanceof Model) {
-            $this->fillable = $model->getFillable();
+            $this->fillable = array_values($model->getFillable());
             parent::__construct($model->toArray());
             $this->table = $model->getTable();
             $this->locale = $locale;
@@ -26,7 +27,7 @@ class Translated extends Model
     }
 
     #[Override]
-    public function getAttributeValue($key)
+    public function getAttributeValue($key): mixed
     {
         if ($key === 'name' && $this->locale !== '' && $this->type !== '') {
             $localeKey = $this->type . '.' . $this->slug;

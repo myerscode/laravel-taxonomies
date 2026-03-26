@@ -27,7 +27,7 @@
     }
   ],
   "require": {
-    "php": "^8.3",
+    "php": "^8.5",
     "illuminate/database": "^13.0",
     "illuminate/support": "^13.0",
     "myerscode/utilities-strings": "^2026.0",

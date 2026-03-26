@@ -3,21 +3,24 @@
 namespace Myerscode\Laravel\Taxonomies;
 
 use Illuminate\Database\Eloquent\Model as LaravelModel;
-use Myerscode\Laravel\Taxonomies\Exceptions\UnsupportedModelDataException;
+use Illuminate\Support\Collection;
 use Myerscode\Utilities\Bags\Utility as Bag;
 use Myerscode\Utilities\Strings\Utility as Strings;
 use Override;
 
+/**
+ * @property string $slug
+ * @property string $name
+ */
 class Model extends LaravelModel
 {
     /**
      * Add a new record
      *
-     * @param $data
-     * @return self
-     * @throws UnsupportedModelDataException
+     * @param  array<string, mixed>|string  $data
+     * @return static|Collection<int|string, mixed>
      */
-    public static function add($data)
+    public static function add(array|string $data): static|Collection
     {
         if (is_array($data)) {
             if ((new Bag($data))->isIndexed()) {
@@ -27,30 +30,17 @@ class Model extends LaravelModel
             return static::firstOrCreate($data);
         }
 
-        if (is_string($data)) {
-            $slug = (string)(new Strings($data))->toSlug();
-            return static::firstOrCreate(['slug' => $slug], ['name' => $data]);
-        }
+        $slug = (string) (new Strings($data))->toSlug();
 
-        throw new UnsupportedModelDataException();
+        return static::firstOrCreate(['slug' => $slug], ['name' => $data]);
     }
 
-    /**
-     * Find the record by its name
-     *
-     * @return mixed
-     */
-    public static function findByName(string $name)
+    public static function findByName(string $name): ?static
     {
         return self::where('name', '=', $name)->first();
     }
 
-    /**
-     * Find the record by its slug
-     *
-     * @return mixed
-     */
-    public static function findBySlug(string $slug)
+    public static function findBySlug(string $slug): ?static
     {
         return self::where('slug', '=', $slug)->first();
     }
@@ -62,17 +52,12 @@ class Model extends LaravelModel
 
         static::creating(function (Model $model): void {
             if (empty($model->slug)) {
-                $model->slug = (string)(new Strings($model->name))->toSlug();
+                $model->slug = (string) (new Strings($model->name))->toSlug();
             }
         });
     }
 
-    /**
-     * Convert a model into a translatable instance of itself
-     *
-     * @param $lang
-     */
-    public function translate($lang = null): Translated
+    public function translate(?string $lang = null): Translated
     {
         $lang ??= app()->getLocale();
 
