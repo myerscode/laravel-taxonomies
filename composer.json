@@ -10,8 +10,7 @@
     "php",
     "eloquent",
     "wordpress",
-    "laravel",
-    "lumen"
+    "laravel"
   ],
   "type": "library",
   "license": "MIT",
@@ -33,13 +32,10 @@
     "illuminate/support": "^13.0",
     "myerscode/utilities-strings": "^2026.0",
     "myerscode/utilities-bags": "^2026.0"
-
   },
   "require-dev": {
-    "mockery/mockery": "^1.2",
     "orchestra/testbench": "^11.0",
-    "phpunit/phpunit": "^13.0",
-    "squizlabs/php_codesniffer": "^3.6"
+    "phpunit/phpunit": "^13.0"
   },
   "autoload": {
     "psr-4": {
@@ -60,7 +56,6 @@
   },
   "scripts": {
     "tests": "vendor/bin/phpunit --testdox --no-coverage --colors=always",
-    "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --testdox --colors=always",
-    "phpcs": "vendor/bin/phpcs src tests --standard=PSR12"
+    "test-coverage": "vendor/bin/phpunit --testdox --colors=always"
   }
 }
