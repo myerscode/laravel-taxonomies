@@ -6,30 +6,33 @@ use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Myerscode\Laravel\Taxonomies\Exceptions\UnsupportedModelDataException;
 use Myerscode\Utilities\Bags\Utility as Bag;
 use Myerscode\Utilities\Strings\Utility as Strings;
+use Override;
 
 class Model extends LaravelModel
 {
-
-    #[\Override]
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::creating(function (Model $model): void {
-            if (empty($model->slug)) {
-                $model->slug = (string)(new Strings($model->name))->toSlug();
-            }
-        });
-    }
-
     /**
-     * Find the record by its slug
+     * Add a new record
      *
-     * @return mixed
+     * @param $data
+     * @return self
+     * @throws UnsupportedModelDataException
      */
-    public static function findBySlug(string $slug)
+    public static function add($data)
     {
-        return self::where('slug', '=', $slug)->first();
+        if (is_array($data)) {
+            if ((new Bag($data))->isIndexed()) {
+                return collect($data)->each(fn ($record) => self::add($record));
+            }
+
+            return static::firstOrCreate($data);
+        }
+
+        if (is_string($data)) {
+            $slug = (string)(new Strings($data))->toSlug();
+            return static::firstOrCreate(['slug' => $slug], ['name' => $data]);
+        }
+
+        throw new UnsupportedModelDataException();
     }
 
     /**
@@ -43,28 +46,25 @@ class Model extends LaravelModel
     }
 
     /**
-     * Add a new record
+     * Find the record by its slug
      *
-     * @param $data
-     * @return self
-     * @throws UnsupportedModelDataException
+     * @return mixed
      */
-    public static function add($data)
+    public static function findBySlug(string $slug)
     {
-        if (is_array($data)) {
-            if ((new Bag($data))->isIndexed()) {
-                return collect($data)->each(fn($record) => self::add($record));
+        return self::where('slug', '=', $slug)->first();
+    }
+
+    #[Override]
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function (Model $model): void {
+            if (empty($model->slug)) {
+                $model->slug = (string)(new Strings($model->name))->toSlug();
             }
-
-            return static::firstOrCreate($data);
-        }
-
-        if (is_string($data)) {
-            $slug = (string)(new Strings($data))->toSlug();
-            return static::firstOrCreate(['slug' => $slug], ['name' => $data]);
-        }
-
-        throw new UnsupportedModelDataException();
+        });
     }
 
     /**

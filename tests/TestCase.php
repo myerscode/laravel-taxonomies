@@ -13,23 +13,10 @@ class TestCase extends Orchestra
 {
     use RefreshDatabase;
 
-    protected function getPackageProviders($app)
-    {
-        return [
-            ServiceProvider::class,
-        ];
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->loadLocales($this->app);
-    }
-
-    protected function defineDatabaseMigrations()
-    {
-        $this->loadMigrationsFrom(__DIR__ . '/../src/Stubs/migrations');
-        $this->loadMigrationsFrom(__DIR__ . '/Support/migrations');
     }
 
     public function loadLocales(Application $application): void
@@ -45,6 +32,12 @@ class TestCase extends Orchestra
         ], 'cy');
     }
 
+    protected function defineDatabaseMigrations()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../src/Stubs/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/Support/migrations');
+    }
+
     /**
      * @param \Illuminate\Foundation\Application $app
      */
@@ -58,5 +51,12 @@ class TestCase extends Orchestra
                 'model' => \Myerscode\Laravel\Taxonomies\Term::class,
             ],
         ]);
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            ServiceProvider::class,
+        ];
     }
 }

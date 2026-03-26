@@ -4,8 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
+    public function down(): void
+    {
+        Schema::drop('taggables');
+    }
     public function up(): void
     {
         Schema::create('taggables', function (Blueprint $blueprint): void {
@@ -15,10 +18,5 @@ return new class extends Migration
 
             $blueprint->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
         });
-    }
-
-    public function down(): void
-    {
-        Schema::drop('taggables');
     }
 };

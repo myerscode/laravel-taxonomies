@@ -35,7 +35,9 @@
   },
   "require-dev": {
     "orchestra/testbench": "^11.0",
-    "phpunit/phpunit": "^13.0"
+    "phpunit/phpunit": "^13.0",
+    "laravel/pint": "^1.29",
+    "larastan/larastan": "^3.9"
   },
   "autoload": {
     "psr-4": {
@@ -55,7 +57,10 @@
     }
   },
   "scripts": {
+    "lint": "vendor/bin/pint",
+    "analyse": "vendor/bin/phpstan analyse",
     "tests": "vendor/bin/phpunit --testdox --no-coverage --colors=always",
-    "test-coverage": "vendor/bin/phpunit --testdox --colors=always"
+    "test-coverage": "vendor/bin/phpunit --testdox --colors=always",
+    "security-audit": "@composer audit"
   }
 }

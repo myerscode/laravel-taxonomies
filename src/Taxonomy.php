@@ -16,14 +16,6 @@ class Taxonomy extends Model
     use HasTaxonomy;
 
     /**
-     * Terms associated with the taxonomy
-     */
-    public function terms(): HasMany
-    {
-        return $this->hasMany(Term::class);
-    }
-
-    /**
      * @return Taxonomy
      */
     public static function findOrAdd(string $taxonomy)
@@ -31,31 +23,6 @@ class Taxonomy extends Model
         $slug = (new Strings($taxonomy))->toSlug()->value();
 
         return self::firstOrCreate(['slug' => $slug], ['name' => $taxonomy]);
-    }
-
-    /**
-     * Attach a known term to the taxonomy
-     *
-     * @return $this
-     */
-    public function attachTerm(Term $term): static
-    {
-        return $this->attachTerms([$term]);
-    }
-
-    /**
-     * Attach known terms to the taxonomy
-     *
-     * @param Collection | Term[] $attach | Term $attach
-     * @return $this
-     */
-    public function attachTerms($attach): static
-    {
-        $terms = collect($attach)->filter(fn($term): bool => $term instanceof Term);
-
-        $this->terms()->saveMany($terms);
-
-        return $this;
     }
 
     /**
@@ -78,5 +45,38 @@ class Taxonomy extends Model
         $this->attachTerms($terms);
 
         return $this;
+    }
+
+    /**
+     * Attach a known term to the taxonomy
+     *
+     * @return $this
+     */
+    public function attachTerm(Term $term): static
+    {
+        return $this->attachTerms([$term]);
+    }
+
+    /**
+     * Attach known terms to the taxonomy
+     *
+     * @param Collection | Term[] $attach | Term $attach
+     * @return $this
+     */
+    public function attachTerms($attach): static
+    {
+        $terms = collect($attach)->filter(fn ($term): bool => $term instanceof Term);
+
+        $this->terms()->saveMany($terms);
+
+        return $this;
+    }
+
+    /**
+     * Terms associated with the taxonomy
+     */
+    public function terms(): HasMany
+    {
+        return $this->hasMany(Term::class);
     }
 }

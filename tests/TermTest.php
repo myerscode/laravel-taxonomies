@@ -7,14 +7,22 @@ namespace Tests;
 use Myerscode\Laravel\Taxonomies\Exceptions\UnsupportedModelDataException;
 use Myerscode\Laravel\Taxonomies\Taxonomy;
 use Myerscode\Laravel\Taxonomies\Term;
+use stdClass;
 
 final class TermTest extends TestCase
 {
-
     public function testAddTerm(): void
     {
         Term::add('Foo');
         Term::add(['name' => 'Bar']);
+
+        $this->assertCount(2, Term::all());
+    }
+
+    public function testAddTermToTaxonomy(): void
+    {
+        Term::addToTaxonomy('Hello', 'World');
+        Term::addToTaxonomy('Foo', 'Bar');
 
         $this->assertCount(2, Term::all());
     }
@@ -31,16 +39,6 @@ final class TermTest extends TestCase
         $this->assertEquals(null, $invalidTerm);
     }
 
-    public function testFindTermBySlug(): void
-    {
-        Term::add('Hello');
-        Term::add('World');
-
-        $term = Term::findBySlug('hello');
-        $this->assertInstanceOf(Term::class, $term);
-        $this->assertEquals('Hello', $term->name);
-    }
-
     public function testFindTermByName(): void
     {
         Term::add('Hello World');
@@ -51,18 +49,14 @@ final class TermTest extends TestCase
         $this->assertEquals('hello-world', $term->slug);
     }
 
-    public function testUnsupportedTermDataThrowsException(): void
+    public function testFindTermBySlug(): void
     {
-        $this->expectException(UnsupportedModelDataException::class);
-        Term::add(new \stdClass());
-    }
+        Term::add('Hello');
+        Term::add('World');
 
-    public function testAddTermToTaxonomy(): void
-    {
-        Term::addToTaxonomy('Hello', 'World');
-        Term::addToTaxonomy('Foo', 'Bar');
-
-        $this->assertCount(2, Term::all());
+        $term = Term::findBySlug('hello');
+        $this->assertInstanceOf(Term::class, $term);
+        $this->assertEquals('Hello', $term->name);
     }
 
     public function testTermBelongsToTaxonomy(): void
@@ -76,6 +70,12 @@ final class TermTest extends TestCase
         $term = Term::add('Foo');
 
         $this->assertNull($term->taxonomy);
+    }
+
+    public function testUnsupportedTermDataThrowsException(): void
+    {
+        $this->expectException(UnsupportedModelDataException::class);
+        Term::add(new stdClass());
     }
 
 }

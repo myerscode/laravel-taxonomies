@@ -3,10 +3,10 @@
 namespace Myerscode\Laravel\Taxonomies;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use Override;
 
 class ServiceProvider extends LaravelServiceProvider
 {
-
     /**
      * Bootstrap the application services.
      */
@@ -26,11 +26,12 @@ class ServiceProvider extends LaravelServiceProvider
     /**
      * Register the application services.
      */
-    #[\Override]
+    #[Override]
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/Stubs/config.php', 'taxonomies'
+            __DIR__ . '/Stubs/config.php',
+            'taxonomies',
         );
     }
 

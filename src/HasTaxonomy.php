@@ -9,7 +9,6 @@ use Myerscode\Utilities\Strings\Utility as Strings;
 
 trait HasTaxonomy
 {
-
     /**
      * @var Taxonomy
      */
@@ -26,19 +25,37 @@ trait HasTaxonomy
         self::$term = config('taxonomies.term.model');
     }
 
-    public function terms(): MorphToMany
+    public static function withAllTerms($terms, $taxonomy = null): Collection
     {
-        return $this->morphToMany(self::$term, 'taggable');
+        return self::hasAllTerms($terms, $taxonomy)->get();
     }
 
-    public function scopeHasAnyTerms(Builder $builder, $terms, string $taxonomy = null): Builder
+    public static function withAnyTerms($terms, $taxonomy = null): Collection
+    {
+        return self::hasAnyTerms($terms, $taxonomy)->get();
+    }
+
+    public function addTerm(string $term, $taxonomy = null): static
+    {
+        return $this->addTerms([$term], $taxonomy);
+    }
+
+    public function addTerms(array $terms, $taxonomy = null): static
     {
         $terms = $this->collectTerms($terms, $taxonomy);
 
-        return $builder->whereHas('terms', function (Builder $builder) use ($terms): void {
-            $ids = $terms->pluck('id');
-            $builder->whereIn('terms.id', $ids);
-        });
+        $this->terms()->syncWithoutDetaching($terms->pluck('id')->toArray());
+
+        return $this;
+    }
+
+    public function detachTerms($terms, $taxonomy = null): static
+    {
+        $removeTerms = $this->collectTerms($terms, $taxonomy)->pluck('id')->toArray();
+
+        $this->terms()->detach($removeTerms);
+
+        return $this;
     }
 
     public function scopeHasAllTerms(Builder $builder, $terms, string $taxonomy = null): Builder
@@ -52,6 +69,30 @@ trait HasTaxonomy
         });
 
         return $builder;
+    }
+
+    public function scopeHasAnyTerms(Builder $builder, $terms, string $taxonomy = null): Builder
+    {
+        $terms = $this->collectTerms($terms, $taxonomy);
+
+        return $builder->whereHas('terms', function (Builder $builder) use ($terms): void {
+            $ids = $terms->pluck('id');
+            $builder->whereIn('terms.id', $ids);
+        });
+    }
+
+    public function syncTerms($terms, $taxonomy = null): static
+    {
+        $terms = $this->collectTerms($terms, $taxonomy);
+
+        $this->terms()->sync($terms->pluck('id')->toArray());
+
+        return $this;
+    }
+
+    public function terms(): MorphToMany
+    {
+        return $this->morphToMany(self::$term, 'taggable');
     }
 
     /**
@@ -80,47 +121,5 @@ trait HasTaxonomy
 
             return $term::firstOrCreate($findBy, ['name' => $name]);
         });
-    }
-
-    public function addTerm(string $term, $taxonomy = null): static
-    {
-        return $this->addTerms([$term], $taxonomy);
-    }
-
-    public function addTerms(array $terms, $taxonomy = null): static
-    {
-        $terms = $this->collectTerms($terms, $taxonomy);
-
-        $this->terms()->syncWithoutDetaching($terms->pluck('id')->toArray());
-
-        return $this;
-    }
-
-    public function syncTerms($terms, $taxonomy = null): static
-    {
-        $terms = $this->collectTerms($terms, $taxonomy);
-
-        $this->terms()->sync($terms->pluck('id')->toArray());
-
-        return $this;
-    }
-
-    public function detachTerms($terms, $taxonomy = null): static
-    {
-        $removeTerms = $this->collectTerms($terms, $taxonomy)->pluck('id')->toArray();
-
-        $this->terms()->detach($removeTerms);
-
-        return $this;
-    }
-
-    public static function withAnyTerms($terms, $taxonomy = null): Collection
-    {
-        return self::hasAnyTerms($terms, $taxonomy)->get();
-    }
-
-    public static function withAllTerms($terms, $taxonomy = null): Collection
-    {
-        return self::hasAllTerms($terms, $taxonomy)->get();
     }
 }

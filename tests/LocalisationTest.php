@@ -9,18 +9,15 @@ use Myerscode\Laravel\Taxonomies\Term;
 
 final class LocalisationTest extends TestCase
 {
-
-    public function testTermIsTranslated(): void
+    public function testIsTranslatedToDefaultLocal(): void
     {
         $model = Term::add('Foo Bar');
+        $taxonomy = Taxonomy::add('Hello World');
 
-        $translated = $model->translate('fr');
+        app()->setLocale('cy');
 
-        $this->assertEquals('Foo La La', $translated->name);
-
-        $translated->save();
-
-        $this->assertEquals('Foo Bar', $model->name);
+        $this->assertEquals('Tymor un', $model->translate()->name);
+        $this->assertEquals('Helo Byd', $taxonomy->translate()->name);
     }
 
     public function testTaxonomyIsTranslated(): void
@@ -36,15 +33,6 @@ final class LocalisationTest extends TestCase
         $this->assertEquals('Hello World', $model->name);
     }
 
-    public function testTermReturnsDefaultForMissingTranslation(): void
-    {
-        $model = Term::add('A Random Term');
-
-        $translated = $model->translate('fr');
-
-        $this->assertEquals('A Random Term', $translated->name);
-    }
-
     public function testTaxonomyReturnsDefaultForMissingTranslation(): void
     {
         $model = Taxonomy::add('A Random Taxonomy');
@@ -54,15 +42,25 @@ final class LocalisationTest extends TestCase
         $this->assertEquals('A Random Taxonomy', $translated->name);
     }
 
-
-    public function testIsTranslatedToDefaultLocal(): void
+    public function testTermIsTranslated(): void
     {
         $model = Term::add('Foo Bar');
-        $taxonomy = Taxonomy::add('Hello World');
 
-        app()->setLocale('cy');
+        $translated = $model->translate('fr');
 
-        $this->assertEquals('Tymor un', $model->translate()->name);
-        $this->assertEquals('Helo Byd', $taxonomy->translate()->name);
+        $this->assertEquals('Foo La La', $translated->name);
+
+        $translated->save();
+
+        $this->assertEquals('Foo Bar', $model->name);
+    }
+
+    public function testTermReturnsDefaultForMissingTranslation(): void
+    {
+        $model = Term::add('A Random Term');
+
+        $translated = $model->translate('fr');
+
+        $this->assertEquals('A Random Term', $translated->name);
     }
 }

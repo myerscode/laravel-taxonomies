@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 ])]
 class Term extends Model
 {
-
     /**
      * Add a term to a given taxonomy
      *
@@ -26,7 +25,7 @@ class Term extends Model
 
         Taxonomy::findOrAdd($taxonomy)->attachTerm($model);
 
-        return new static;
+        return new static();
     }
 
     /**

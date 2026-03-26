@@ -2,6 +2,8 @@
 
 namespace Myerscode\Laravel\Taxonomies;
 
+use Override;
+
 class Translated extends Model
 {
     protected $fillable = [];
@@ -23,7 +25,7 @@ class Translated extends Model
         }
     }
 
-    #[\Override]
+    #[Override]
     public function getAttributeValue($key)
     {
         if ($key === 'name' && $this->locale !== '' && $this->type !== '') {

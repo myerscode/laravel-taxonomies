@@ -9,7 +9,6 @@ use Myerscode\Laravel\Taxonomies\Taxonomy;
 
 final class TaxonomyTest extends TestCase
 {
-
     private Taxonomy $taxonomy;
 
     protected function setUp(): void
@@ -19,11 +18,27 @@ final class TaxonomyTest extends TestCase
         $this->taxonomy = Taxonomy::create(['name' => 'Foo']);
     }
 
-    public function testCreateTaxonomy(): void
+    public function testAddingMultipleTermsToTaxonomy(): void
     {
-        Taxonomy::create(['name' => 'Bar']);
+        $this->taxonomy->addTerms(['Foo', 'Bar']);
+        $this->taxonomy->refresh();
 
-        $this->assertCount(2, Taxonomy::all());
+        $terms = Term::whereIn('name', ['Foo', 'Bar'])->get();
+
+        $this->assertCount(2, $this->taxonomy->terms);
+        $this->assertEquals($terms->toArray(), $this->taxonomy->terms->toArray());
+    }
+
+    public function testAddingTermToTaxonomy(): void
+    {
+
+        $this->taxonomy->addTerm('Test');
+        $this->taxonomy->refresh();
+
+        $term = Term::where(['name' => 'Test'])->firstOrFail();
+
+        $this->assertCount(1, $this->taxonomy->terms);
+        $this->assertEquals($term->toArray(), $this->taxonomy->terms->first()->toArray());
     }
 
     public function testAddTaxonomy(): void
@@ -48,6 +63,13 @@ final class TaxonomyTest extends TestCase
         $this->assertEquals($term->toArray(), $this->taxonomy->terms->first()->toArray());
     }
 
+    public function testCreateTaxonomy(): void
+    {
+        Taxonomy::create(['name' => 'Bar']);
+
+        $this->assertCount(2, Taxonomy::all());
+    }
+
     public function testEnsureTaxMovesWhenAttachedToTaxonomy(): void
     {
 
@@ -68,28 +90,5 @@ final class TaxonomyTest extends TestCase
 
         $this->assertCount(1, $tax->terms);
         $this->assertCount(0, $this->taxonomy->terms);
-    }
-
-    public function testAddingTermToTaxonomy(): void
-    {
-
-        $this->taxonomy->addTerm('Test');
-        $this->taxonomy->refresh();
-
-        $term = Term::where(['name' => 'Test'])->firstOrFail();
-
-        $this->assertCount(1, $this->taxonomy->terms);
-        $this->assertEquals($term->toArray(), $this->taxonomy->terms->first()->toArray());
-    }
-
-    public function testAddingMultipleTermsToTaxonomy(): void
-    {
-        $this->taxonomy->addTerms(['Foo', 'Bar']);
-        $this->taxonomy->refresh();
-
-        $terms = Term::whereIn('name', ['Foo', 'Bar'])->get();
-
-        $this->assertCount(2, $this->taxonomy->terms);
-        $this->assertEquals($terms->toArray(), $this->taxonomy->terms->toArray());
     }
 }
