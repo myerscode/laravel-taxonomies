@@ -11,7 +11,7 @@ class Model extends LaravelModel
 {
 
     #[\Override]
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 

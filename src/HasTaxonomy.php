@@ -82,12 +82,12 @@ trait HasTaxonomy
         });
     }
 
-    public function addTerm(string $term, $taxonomy = null)
+    public function addTerm(string $term, $taxonomy = null): static
     {
         return $this->addTerms([$term], $taxonomy);
     }
 
-    public function addTerms(array $terms, $taxonomy = null)
+    public function addTerms(array $terms, $taxonomy = null): static
     {
         $terms = $this->collectTerms($terms, $taxonomy);
 
@@ -96,7 +96,7 @@ trait HasTaxonomy
         return $this;
     }
 
-    public function syncTerms($terms, $taxonomy = null)
+    public function syncTerms($terms, $taxonomy = null): static
     {
         $terms = $this->collectTerms($terms, $taxonomy);
 
@@ -105,7 +105,7 @@ trait HasTaxonomy
         return $this;
     }
 
-    public function detachTerms($terms, $taxonomy = null)
+    public function detachTerms($terms, $taxonomy = null): static
     {
         $removeTerms = $this->collectTerms($terms, $taxonomy)->pluck('id')->toArray();
 
@@ -114,12 +114,12 @@ trait HasTaxonomy
         return $this;
     }
 
-    public static function withAnyTerms($terms, $taxonomy = null)
+    public static function withAnyTerms($terms, $taxonomy = null): Collection
     {
         return self::hasAnyTerms($terms, $taxonomy)->get();
     }
 
-    public static function withAllTerms($terms, $taxonomy = null)
+    public static function withAllTerms($terms, $taxonomy = null): Collection
     {
         return self::hasAllTerms($terms, $taxonomy)->get();
     }

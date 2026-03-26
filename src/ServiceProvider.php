@@ -13,7 +13,7 @@ class ServiceProvider extends LaravelServiceProvider
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
-            $timestamp = date('Y_m_d_', time());
+            $timestamp = now()->format('Y_m_d_');
             $this->publishes([
                 __DIR__ . '/Stubs/migrations/0000_00_00_000001_create_taxonomies_table.php' => database_path('migrations/' . $timestamp . '000001_create_taxonomies_table.php'),
                 __DIR__ . '/Stubs/migrations/0000_00_00_000002_create_terms_table.php' => database_path('migrations/' . $timestamp . '000002_create_terms_table.php'),
