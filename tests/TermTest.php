@@ -26,6 +26,26 @@ final class TermTest extends TestCase
         $this->assertCount(2, Term::all());
     }
 
+    public function testAddTermToTaxonomyWithAssociativeArray(): void
+    {
+        $result = Term::addToTaxonomy(['name' => 'Hello'], 'World');
+
+        $this->assertInstanceOf(Term::class, $result);
+        $this->assertCount(1, Term::all());
+
+        $term = Term::findByName('Hello');
+        $this->assertInstanceOf(Taxonomy::class, $term->taxonomy);
+        $this->assertEquals('World', $term->taxonomy->name);
+    }
+
+    public function testAddTermToTaxonomyWithIndexedArray(): void
+    {
+        $result = Term::addToTaxonomy(['Hello', 'World'], 'MyTaxonomy');
+
+        $this->assertInstanceOf(Term::class, $result);
+        $this->assertCount(2, Term::all());
+    }
+
     public function testAddTermWithAlternateSlug(): void
     {
         Term::add(['slug' => 'bar', 'name' => 'Foo']);
