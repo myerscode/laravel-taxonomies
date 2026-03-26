@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" bootstrap="vendor/autoload.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" cacheResult="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage processUncoveredFiles="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/13.0/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         cacheResult="false"
+         stopOnFailure="false">
+  <source>
     <include>
       <directory suffix=".php">./src/</directory>
     </include>
-    <exclude/>
-    <report>
-      <clover outputFile="./coverage/coverage.xml"/>
-      <html outputDirectory="./coverage/coverage"/>
-    </report>
-  </coverage>
+  </source>
   <testsuites>
     <testsuite name="Unit">
       <directory suffix="Test.php">./tests/</directory>
     </testsuite>
   </testsuites>
-  <logging>
-    <testdoxHtml outputFile="./coverage/tests.html"/>
-  </logging>
   <php>
     <env name="DB_CONNECTION" value="sqlite"/>
     <env name="DB_DATABASE" value=":memory:"/>
