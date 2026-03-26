@@ -2,30 +2,29 @@
 
 namespace Myerscode\Laravel\Taxonomies;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[Fillable([
+    'slug',
+    'name',
+    'taxonomy_id',
+])]
 class Term extends Model
 {
-
-    protected $fillable = [
-        'slug',
-        'name',
-        'taxonomy_id',
-    ];
 
     /**
      * Add a term to a given taxonomy
      *
      * @param $term
      * @param $taxonomy
-     * @return self
      * @throws Exceptions\UnsupportedModelDataException
      */
-    public static function addToTaxonomy($term, $taxonomy): self
+    public static function addToTaxonomy($term, string $taxonomy): self
     {
-        $terms = self::add($term);
+        $model = self::add($term);
 
-        Taxonomy::findOrAdd($taxonomy)->attachTerm($terms);
+        Taxonomy::findOrAdd($taxonomy)->attachTerm($model);
 
         return new static;
     }

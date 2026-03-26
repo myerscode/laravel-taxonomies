@@ -12,7 +12,7 @@ class Translated extends Model
 
     public function __construct(string $locale = '', ?Model $model = null)
     {
-        if ($model !== null) {
+        if ($model instanceof Model) {
             $this->fillable = $model->getFillable();
             parent::__construct($model->toArray());
             $this->table = $model->getTable();
@@ -23,6 +23,7 @@ class Translated extends Model
         }
     }
 
+    #[\Override]
     public function getAttributeValue($key)
     {
         if ($key === 'name' && $this->locale !== '' && $this->type !== '') {

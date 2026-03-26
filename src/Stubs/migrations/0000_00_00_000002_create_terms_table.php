@@ -8,14 +8,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('terms', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('taxonomy_id')->unsigned()->nullable();
-            $table->text('slug');
-            $table->text('name');
-            $table->timestamps();
+        Schema::create('terms', function (Blueprint $blueprint): void {
+            $blueprint->increments('id');
+            $blueprint->integer('taxonomy_id')->unsigned()->nullable();
+            $blueprint->text('slug');
+            $blueprint->text('name');
+            $blueprint->timestamps();
 
-            $table->foreign('taxonomy_id')->references('id')->on('taxonomies')->onDelete('cascade');
+            $blueprint->foreign('taxonomy_id')->references('id')->on('taxonomies')->onDelete('cascade');
         });
     }
 

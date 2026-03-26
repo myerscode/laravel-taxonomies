@@ -8,12 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('taggables', function (Blueprint $table) {
-            $table->integer('term_id')->unsigned();
-            $table->integer('taggable_id')->unsigned();
-            $table->string('taggable_type');
+        Schema::create('taggables', function (Blueprint $blueprint): void {
+            $blueprint->integer('term_id')->unsigned();
+            $blueprint->integer('taggable_id')->unsigned();
+            $blueprint->string('taggable_type');
 
-            $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
+            $blueprint->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
         });
     }
 

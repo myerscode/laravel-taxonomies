@@ -8,11 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('slug');
-            $table->string('title');
-            $table->timestamps();
+        Schema::create('posts', function (Blueprint $blueprint): void {
+            $blueprint->increments('id');
+            $blueprint->string('slug');
+            $blueprint->string('title');
+            $blueprint->timestamps();
         });
     }
 

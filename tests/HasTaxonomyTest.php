@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use Myerscode\Laravel\Taxonomies\Taxonomy;
 use Myerscode\Laravel\Taxonomies\Term;
 use Tests\Support\Post;
 
-class HasTaxonomyTest extends TestCase
+final class HasTaxonomyTest extends TestCase
 {
 
-    /**
-     * @var Post
-     */
-    protected $post;
+    private Post $post;
 
     public function setUp(): void
     {
@@ -21,7 +20,7 @@ class HasTaxonomyTest extends TestCase
         $this->post = Post::create(['slug' => 'hello-world', 'title' => 'Hello World']);
     }
 
-    public function testModelCanAddTerm()
+    public function testModelCanAddTerm(): void
     {
         $this->post->addTerm('Foo');
 
@@ -30,7 +29,7 @@ class HasTaxonomyTest extends TestCase
         $this->assertEquals(['foo'], $this->post->terms->pluck(['slug'])->toArray());
     }
 
-    public function testModelCanAddMultipleTerms()
+    public function testModelCanAddMultipleTerms(): void
     {
         $this->post->addTerms(['Foo', 'Bar']);
 
@@ -39,7 +38,7 @@ class HasTaxonomyTest extends TestCase
         $this->assertEquals(['foo', 'bar'], $this->post->terms->pluck(['slug'])->toArray());
     }
 
-    public function testModelCanSyncTerms()
+    public function testModelCanSyncTerms(): void
     {
         $this->post->addTerms(['Foo', 'Bar', 'Hello', 'World']);
         $this->assertCount(4, $this->post->terms);
@@ -56,7 +55,7 @@ class HasTaxonomyTest extends TestCase
         $this->assertEquals(['Bar'], $this->post->terms->pluck('name')->toArray());
     }
 
-    public function testModelCanRemoveTerms()
+    public function testModelCanRemoveTerms(): void
     {
         $this->post->addTerms(['Foo', 'Bar', 'Hello', 'World']);
         $this->assertCount(4, $this->post->terms);
@@ -70,27 +69,29 @@ class HasTaxonomyTest extends TestCase
         $this->assertCount(1, $this->post->terms);
     }
 
-    public function testModelCanAddTermToTaxonomy()
+    public function testModelCanAddTermToTaxonomy(): void
     {
         $this->post->addTerm('Hello', 'Foo Bar');
         $this->post->addTerm('World', 'Foo Bar');
+
         $taxonomy = Taxonomy::where('name', 'Foo Bar')->get()->first();
 
         $this->assertCount(2, $this->post->terms);
         $this->assertCount(2, $taxonomy->terms);
     }
 
-    public function testModelCanAddTermToTaxonomyBySlug()
+    public function testModelCanAddTermToTaxonomyBySlug(): void
     {
         $this->post->addTerm('Hello', 'foo-bar');
         $this->post->addTerm('World', 'foo-bar');
+
         $taxonomy = Taxonomy::where('name', 'foo-bar')->get()->first();
 
         $this->assertCount(2, $this->post->terms);
         $this->assertCount(2, $taxonomy->terms);
     }
 
-    public function testModelCanAddTermToTaxonomyByItsId()
+    public function testModelCanAddTermToTaxonomyByItsId(): void
     {
         $taxonomy = Taxonomy::findOrAdd('Foo Bar');
         $this->post->addTerm('Hello', 1);
@@ -100,7 +101,7 @@ class HasTaxonomyTest extends TestCase
         $this->assertCount(2, $taxonomy->terms);
     }
 
-    public function testModelCanAddTermToTaxonomyByInstance()
+    public function testModelCanAddTermToTaxonomyByInstance(): void
     {
         $taxonomy = Taxonomy::findOrAdd('Foo Bar');
         $this->post->addTerm('Hello', $taxonomy);
@@ -110,7 +111,7 @@ class HasTaxonomyTest extends TestCase
         $this->assertCount(2, $taxonomy->terms);
     }
 
-    public function testModelCanFindByAnyTerms()
+    public function testModelCanFindByAnyTerms(): void
     {
         $model1 = Post::create(['slug' => 'test-one', 'title' => 'Test One']);
         $model2 = Post::create(['slug' => 'test-two', 'title' => 'Test Two']);
@@ -118,6 +119,7 @@ class HasTaxonomyTest extends TestCase
 
         $model1->addTerm('Hello');
         $model1->addTerm('World');
+
         $model2->addTerm('World');
         $model3->addTerm('Foo');
         $model3->addTerm('Bar');
@@ -125,7 +127,7 @@ class HasTaxonomyTest extends TestCase
         $this->assertCount(2, Post::withAnyTerms(['Hello', 'World']));
     }
 
-    public function testModelCanFindByAnyTermsFromTaxonomy()
+    public function testModelCanFindByAnyTermsFromTaxonomy(): void
     {
         $model1 = Post::create(['slug' => 'test-one', 'title' => 'Test One']);
         $model2 = Post::create(['slug' => 'test-two', 'title' => 'Test Two']);
@@ -133,8 +135,10 @@ class HasTaxonomyTest extends TestCase
 
         $model1->addTerm('Foo');
         $model1->addTerm('Bar');
+
         $model2->addTerm('Hello');
         $model2->addTerm('Bar');
+
         $model3->addTerm('Foo');
         $model1->addTerm('Foo', 'aaa');
         $model1->addTerm('Bar', 'bbb');
@@ -143,7 +147,7 @@ class HasTaxonomyTest extends TestCase
     }
 
 
-    public function testModelCanFindByAllTerms()
+    public function testModelCanFindByAllTerms(): void
     {
         $model1 = Post::create(['slug' => 'test-one', 'title' => 'Test One']);
         $model2 = Post::create(['slug' => 'test-two', 'title' => 'Test Two']);
@@ -151,6 +155,7 @@ class HasTaxonomyTest extends TestCase
 
         $model1->addTerm('Hello');
         $model1->addTerm('World');
+
         $model2->addTerm('World');
         $model3->addTerm('Foo');
         $model3->addTerm('Bar');
@@ -159,7 +164,7 @@ class HasTaxonomyTest extends TestCase
         $this->assertCount(0, Post::withAllTerms(['Hello', 'World', 'Foo', 'Bar']));
     }
 
-    public function testModelCanFindByAllTermsInTaxonomy()
+    public function testModelCanFindByAllTermsInTaxonomy(): void
     {
         $model1 = Post::create(['slug' => 'test-one', 'title' => 'Test One']);
         $model2 = Post::create(['slug' => 'test-two', 'title' => 'Test Two']);
@@ -168,10 +173,13 @@ class HasTaxonomyTest extends TestCase
         $model1->addTerm('Foo');
         $model1->addTerm('Bar');
         $model1->addTerm('Foo', 'aaa');
+
         $model2->addTerm('Foo', 'aaa');
         $model2->addTerm('Bar', 'aaa');
+
         $model3->addTerm('Foo', 'bbb');
         $model3->addTerm('Bar', 'bbb');
+
         $model1->addTerm('Bar', 'bbb');
 
         $this->assertCount(1, Post::withAllTerms(['Foo', 'Bar']));

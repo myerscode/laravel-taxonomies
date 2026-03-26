@@ -9,10 +9,8 @@ class ServiceProvider extends LaravelServiceProvider
 
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $timestamp = date('Y_m_d_', time());
@@ -27,10 +25,9 @@ class ServiceProvider extends LaravelServiceProvider
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
-    public function register()
+    #[\Override]
+    public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__ . '/Stubs/config.php', 'taxonomies'
@@ -42,6 +39,7 @@ class ServiceProvider extends LaravelServiceProvider
      *
      * @return array
      */
+    #[\Override]
     public function provides()
     {
         return [

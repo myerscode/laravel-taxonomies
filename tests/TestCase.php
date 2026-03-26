@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use Illuminate\Foundation\Application;
@@ -18,7 +20,7 @@ class TestCase extends Orchestra
         ];
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->loadLocales($this->app);
@@ -30,7 +32,7 @@ class TestCase extends Orchestra
         $this->loadMigrationsFrom(__DIR__ . '/Support/migrations');
     }
 
-    public function loadLocales(Application $app)
+    public function loadLocales(Application $application): void
     {
         $this->app['translator']->addLines([
             'terms.foo-bar' => 'Foo La La',

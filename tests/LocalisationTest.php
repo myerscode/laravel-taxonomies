@@ -1,66 +1,68 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use Myerscode\Laravel\Taxonomies\Taxonomy;
 use Myerscode\Laravel\Taxonomies\Term;
 
-class LocalisationTest extends TestCase
+final class LocalisationTest extends TestCase
 {
 
-    public function testTermIsTranslated()
+    public function testTermIsTranslated(): void
     {
-        $term = Term::add('Foo Bar');
+        $model = Term::add('Foo Bar');
 
-        $translated = $term->translate('fr');
+        $translated = $model->translate('fr');
 
         $this->assertEquals('Foo La La', $translated->name);
 
         $translated->save();
 
-        $this->assertEquals('Foo Bar', $term->name);
+        $this->assertEquals('Foo Bar', $model->name);
     }
 
-    public function testTaxonomyIsTranslated()
+    public function testTaxonomyIsTranslated(): void
     {
-        $term = Taxonomy::add('Hello World');
+        $model = Taxonomy::add('Hello World');
 
-        $translated = $term->translate('fr');
+        $translated = $model->translate('fr');
 
         $this->assertEquals('Bonjour le monde', $translated->name);
 
         $translated->save();
 
-        $this->assertEquals('Hello World', $term->name);
+        $this->assertEquals('Hello World', $model->name);
     }
 
-    public function testTermReturnsDefaultForMissingTranslation()
+    public function testTermReturnsDefaultForMissingTranslation(): void
     {
-        $term = Term::add('A Random Term');
+        $model = Term::add('A Random Term');
 
-        $translated = $term->translate('fr');
+        $translated = $model->translate('fr');
 
         $this->assertEquals('A Random Term', $translated->name);
     }
 
-    public function testTaxonomyReturnsDefaultForMissingTranslation()
+    public function testTaxonomyReturnsDefaultForMissingTranslation(): void
     {
-        $term = Taxonomy::add('A Random Taxonomy');
+        $model = Taxonomy::add('A Random Taxonomy');
 
-        $translated = $term->translate('fr');
+        $translated = $model->translate('fr');
 
         $this->assertEquals('A Random Taxonomy', $translated->name);
     }
 
 
-    public function testIsTranslatedToDefaultLocal()
+    public function testIsTranslatedToDefaultLocal(): void
     {
-        $term = Term::add('Foo Bar');
+        $model = Term::add('Foo Bar');
         $taxonomy = Taxonomy::add('Hello World');
 
         app()->setLocale('cy');
 
-        $this->assertEquals('Tymor un', $term->translate()->name);
+        $this->assertEquals('Tymor un', $model->translate()->name);
         $this->assertEquals('Helo Byd', $taxonomy->translate()->name);
     }
 }

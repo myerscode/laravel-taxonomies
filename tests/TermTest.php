@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use Myerscode\Laravel\Taxonomies\Exceptions\UnsupportedModelDataException;
 use Myerscode\Laravel\Taxonomies\Taxonomy;
 use Myerscode\Laravel\Taxonomies\Term;
 
-class TermTest extends TestCase
+final class TermTest extends TestCase
 {
 
-    public function testAddTerm()
+    public function testAddTerm(): void
     {
         Term::add('Foo');
         Term::add(['name' => 'Bar']);
@@ -17,7 +19,7 @@ class TermTest extends TestCase
         $this->assertCount(2, Term::all());
     }
 
-    public function testAddTermWithAlternateSlug()
+    public function testAddTermWithAlternateSlug(): void
     {
         Term::add(['slug' => 'bar', 'name' => 'Foo']);
         $term = Term::findBySlug('bar');
@@ -29,7 +31,7 @@ class TermTest extends TestCase
         $this->assertEquals(null, $invalidTerm);
     }
 
-    public function testFindTermBySlug()
+    public function testFindTermBySlug(): void
     {
         Term::add('Hello');
         Term::add('World');
@@ -39,7 +41,7 @@ class TermTest extends TestCase
         $this->assertEquals('Hello', $term->name);
     }
 
-    public function testFindTermByName()
+    public function testFindTermByName(): void
     {
         Term::add('Hello World');
         Term::add('Foo Bar');
@@ -49,13 +51,13 @@ class TermTest extends TestCase
         $this->assertEquals('hello-world', $term->slug);
     }
 
-    public function testUnsupportedTermDataThrowsException()
+    public function testUnsupportedTermDataThrowsException(): void
     {
         $this->expectException(UnsupportedModelDataException::class);
         Term::add(new \stdClass());
     }
 
-    public function testAddTermToTaxonomy()
+    public function testAddTermToTaxonomy(): void
     {
         Term::addToTaxonomy('Hello', 'World');
         Term::addToTaxonomy('Foo', 'Bar');
@@ -63,7 +65,7 @@ class TermTest extends TestCase
         $this->assertCount(2, Term::all());
     }
 
-    public function testTermBelongsToTaxonomy()
+    public function testTermBelongsToTaxonomy(): void
     {
         Term::addToTaxonomy('Hello', 'World');
         $term = Term::findByName('Hello');

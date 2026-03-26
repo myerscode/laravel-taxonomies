@@ -10,11 +10,12 @@ use Myerscode\Utilities\Strings\Utility as Strings;
 class Model extends LaravelModel
 {
 
+    #[\Override]
     protected static function boot()
     {
         parent::boot();
 
-        static::creating(function (Model $model) {
+        static::creating(function (Model $model): void {
             if (empty($model->slug)) {
                 $model->slug = (string)(new Strings($model->name))->toSlug();
             }
@@ -24,7 +25,6 @@ class Model extends LaravelModel
     /**
      * Find the record by its slug
      *
-     * @param string $slug
      * @return mixed
      */
     public static function findBySlug(string $slug)
@@ -35,7 +35,6 @@ class Model extends LaravelModel
     /**
      * Find the record by its name
      *
-     * @param string $name
      * @return mixed
      */
     public static function findByName(string $name)
@@ -54,16 +53,14 @@ class Model extends LaravelModel
     {
         if (is_array($data)) {
             if ((new Bag($data))->isIndexed()) {
-                return collect($data)->each(function ($record) {
-                    return self::add($record);
-                });
+                return collect($data)->each(fn($record) => self::add($record));
             }
+            
             return static::firstOrCreate($data);
-        } else {
-            if (is_string($data)) {
-                $slug = (string)(new Strings($data))->toSlug();
-                return static::firstOrCreate(['slug' => $slug], ['name' => $data]);
-            }
+        }
+        if (is_string($data)) {
+            $slug = (string)(new Strings($data))->toSlug();
+            return static::firstOrCreate(['slug' => $slug], ['name' => $data]);
         }
 
         throw new UnsupportedModelDataException();
@@ -73,11 +70,10 @@ class Model extends LaravelModel
      * Convert a model into a translatable instance of itself
      *
      * @param $lang
-     * @return Translated
      */
-    public function translate($lang = null)
+    public function translate($lang = null): Translated
     {
-        $lang = $lang ?? app()->getLocale();
+        $lang ??= app()->getLocale();
 
         return new Translated($lang, $this);
     }

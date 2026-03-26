@@ -2,23 +2,21 @@
 
 namespace Myerscode\Laravel\Taxonomies;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Myerscode\Utilities\Strings\Utility as Strings;
 
+#[Fillable([
+    'slug',
+    'name',
+])]
 class Taxonomy extends Model
 {
     use HasTaxonomy;
 
-    protected $fillable = [
-        'slug',
-        'name',
-    ];
-
     /**
      * Terms associated with the taxonomy
-     *
-     * @return HasMany
      */
     public function terms(): HasMany
     {
@@ -26,7 +24,6 @@ class Taxonomy extends Model
     }
 
     /**
-     * @param string $taxonomy
      * @return Taxonomy
      */
     public static function findOrAdd(string $taxonomy)
@@ -39,12 +36,11 @@ class Taxonomy extends Model
     /**
      * Attach a known term to the taxonomy
      *
-     * @param Term $attach
      * @return $this
      */
-    public function attachTerm(Term $attach)
+    public function attachTerm(Term $term)
     {
-        return $this->attachTerms([$attach]);
+        return $this->attachTerms([$term]);
     }
 
     /**
@@ -53,11 +49,9 @@ class Taxonomy extends Model
      * @param Collection | Term[] $attach | Term $attach
      * @return $this
      */
-    public function attachTerms($attach)
+    public function attachTerms($attach): static
     {
-        $terms = collect($attach)->filter(function ($term) {
-            return ($term instanceof Term);
-        });
+        $terms = collect($attach)->filter(fn($term) => $term instanceof Term);
 
         $this->terms()->saveMany($terms);
 
@@ -67,7 +61,6 @@ class Taxonomy extends Model
     /**
      * Find or create a term and attach it to the taxonomy
      *
-     * @param string $term
      * @return Taxonomy
      */
     public function addTerm(string $term)
@@ -78,10 +71,9 @@ class Taxonomy extends Model
     /**
      * Find or create terms and attach it to the taxonomy
      *
-     * @param array $terms
      * @return $this
      */
-    public function addTerms(array $terms)
+    public function addTerms(array $terms): static
     {
         $terms = $this->collectTerms($terms);
 

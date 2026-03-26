@@ -20,7 +20,7 @@ trait HasTaxonomy
      */
     protected static $term;
 
-    public static function bootHasTaxonomy()
+    public static function bootHasTaxonomy(): void
     {
         self::$taxonomy = config('taxonomies.taxonomy.model');
         self::$term = config('taxonomies.term.model');
@@ -31,27 +31,27 @@ trait HasTaxonomy
         return $this->morphToMany(self::$term, 'taggable');
     }
 
-    public function scopeHasAnyTerms(Builder $query, $terms, string $taxonomy = null): Builder
+    public function scopeHasAnyTerms(Builder $builder, $terms, string $taxonomy = null): Builder
     {
         $terms = $this->collectTerms($terms, $taxonomy);
 
-        return $query->whereHas('terms', function (Builder $query) use ($terms) {
+        return $builder->whereHas('terms', function (Builder $query) use ($terms): void {
             $ids = $terms->pluck('id');
             $query->whereIn('terms.id', $ids);
         });
     }
 
-    public function scopeHasAllTerms(Builder $query, $terms, string $taxonomy = null): Builder
+    public function scopeHasAllTerms(Builder $builder, $terms, string $taxonomy = null): Builder
     {
         $terms = $this->collectTerms($terms, $taxonomy);
 
-        $terms->each(function ($term) use ($query) {
-            $query->whereHas('terms', function (Builder $query) use ($term) {
+        $terms->each(function ($term) use ($builder): void {
+            $builder->whereHas('terms', function (Builder $query) use ($term): void {
                 $query->where('terms.id', $term->id);
             });
         });
 
-        return $query;
+        return $builder;
     }
 
     /**
@@ -59,13 +59,12 @@ trait HasTaxonomy
      *
      * @param $terms
      * @param $taxonomy
-     * @return Collection
      */
     private function collectTerms($terms, $taxonomy = null): Collection
     {
         $term = self::$term;
 
-        $terms = collect($terms)->map(function ($name) use ($term, $taxonomy) {
+        return collect($terms)->map(function ($name) use ($term, $taxonomy) {
             $slug = (new Strings($name))->toSlug()->value();
             $findBy = ['slug' => $slug, 'taxonomy_id' => null];
 
@@ -78,10 +77,9 @@ trait HasTaxonomy
                     $findBy['taxonomy_id'] = $taxonomy->id;
                 }
             }
+
             return $term::firstOrCreate($findBy, ['name' => $name]);
         });
-
-        return $terms;
     }
 
     public function addTerm(string $term, $taxonomy = null)
