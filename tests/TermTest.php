@@ -7,6 +7,7 @@ namespace Tests;
 use Myerscode\Laravel\Taxonomies\Taxonomy;
 use Myerscode\Laravel\Taxonomies\Term;
 use stdClass;
+use TypeError;
 
 final class TermTest extends TestCase
 {
@@ -93,7 +94,7 @@ final class TermTest extends TestCase
 
     public function testUnsupportedTermDataThrowsException(): void
     {
-        $this->expectException(\TypeError::class);
+        $this->expectException(TypeError::class);
         Term::add(new stdClass());
     }
 
