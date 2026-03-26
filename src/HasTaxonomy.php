@@ -129,7 +129,7 @@ trait HasTaxonomy
         $term = self::$term;
 
         return collect((array) $terms)->map(function (string $name) use ($term, $taxonomy): Term {
-            $slug = (new Strings($name))->toSlug()->value();
+            $slug = new Strings($name)->toSlug()->value();
             /** @var array<string, mixed> $findBy */
             $findBy = ['slug' => $slug, 'taxonomy_id' => null];
 

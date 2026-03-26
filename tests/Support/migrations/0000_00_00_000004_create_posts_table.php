@@ -9,6 +9,7 @@ return new class () extends Migration {
     {
         Schema::drop('posts');
     }
+
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $blueprint): void {

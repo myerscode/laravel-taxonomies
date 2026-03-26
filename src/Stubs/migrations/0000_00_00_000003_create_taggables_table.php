@@ -9,6 +9,7 @@ return new class () extends Migration {
     {
         Schema::drop('taggables');
     }
+
     public function up(): void
     {
         Schema::create('taggables', function (Blueprint $blueprint): void {

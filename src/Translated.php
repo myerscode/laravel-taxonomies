@@ -7,6 +7,7 @@ use Override;
 class Translated extends Model
 {
     /** @var list<string> */
+    #[\Override]
     protected $fillable = [];
 
     protected string $locale = '';

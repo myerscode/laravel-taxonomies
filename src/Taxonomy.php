@@ -17,7 +17,7 @@ class Taxonomy extends Model
 
     public static function findOrAdd(string $taxonomy): static
     {
-        $slug = (new Strings($taxonomy))->toSlug()->value();
+        $slug = new Strings($taxonomy)->toSlug()->value();
 
         return self::firstOrCreate(['slug' => $slug], ['name' => $taxonomy]);
     }

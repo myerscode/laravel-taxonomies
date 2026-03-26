@@ -23,14 +23,14 @@ class Model extends LaravelModel
     public static function add(array|string $data): static|Collection
     {
         if (is_array($data)) {
-            if ((new Bag($data))->isIndexed()) {
-                return collect($data)->each(fn ($record) => self::add($record));
+            if (new Bag($data)->isIndexed()) {
+                return collect($data)->each(fn (array|string $record): self|Collection => self::add($record));
             }
 
             return static::firstOrCreate($data);
         }
 
-        $slug = (string) (new Strings($data))->toSlug();
+        $slug = (string) new Strings($data)->toSlug();
 
         return static::firstOrCreate(['slug' => $slug], ['name' => $data]);
     }
@@ -52,7 +52,7 @@ class Model extends LaravelModel
 
         static::creating(function (Model $model): void {
             if (empty($model->slug)) {
-                $model->slug = (string) (new Strings($model->name))->toSlug();
+                $model->slug = (string) new Strings($model->name)->toSlug();
             }
         });
     }
