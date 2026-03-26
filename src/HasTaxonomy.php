@@ -35,9 +35,9 @@ trait HasTaxonomy
     {
         $terms = $this->collectTerms($terms, $taxonomy);
 
-        return $builder->whereHas('terms', function (Builder $query) use ($terms): void {
+        return $builder->whereHas('terms', function (Builder $builder) use ($terms): void {
             $ids = $terms->pluck('id');
-            $query->whereIn('terms.id', $ids);
+            $builder->whereIn('terms.id', $ids);
         });
     }
 
@@ -46,8 +46,8 @@ trait HasTaxonomy
         $terms = $this->collectTerms($terms, $taxonomy);
 
         $terms->each(function ($term) use ($builder): void {
-            $builder->whereHas('terms', function (Builder $query) use ($term): void {
-                $query->where('terms.id', $term->id);
+            $builder->whereHas('terms', function (Builder $builder) use ($term): void {
+                $builder->where('terms.id', $term->id);
             });
         });
 

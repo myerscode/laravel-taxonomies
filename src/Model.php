@@ -55,9 +55,10 @@ class Model extends LaravelModel
             if ((new Bag($data))->isIndexed()) {
                 return collect($data)->each(fn($record) => self::add($record));
             }
-            
+
             return static::firstOrCreate($data);
         }
+
         if (is_string($data)) {
             $slug = (string)(new Strings($data))->toSlug();
             return static::firstOrCreate(['slug' => $slug], ['name' => $data]);

@@ -38,7 +38,7 @@ class Taxonomy extends Model
      *
      * @return $this
      */
-    public function attachTerm(Term $term)
+    public function attachTerm(Term $term): static
     {
         return $this->attachTerms([$term]);
     }
@@ -51,7 +51,7 @@ class Taxonomy extends Model
      */
     public function attachTerms($attach): static
     {
-        $terms = collect($attach)->filter(fn($term) => $term instanceof Term);
+        $terms = collect($attach)->filter(fn($term): bool => $term instanceof Term);
 
         $this->terms()->saveMany($terms);
 
@@ -60,10 +60,8 @@ class Taxonomy extends Model
 
     /**
      * Find or create a term and attach it to the taxonomy
-     *
-     * @return Taxonomy
      */
-    public function addTerm(string $term)
+    public function addTerm(string $term): static
     {
         return $this->addTerms([$term]);
     }
