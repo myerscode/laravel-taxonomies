@@ -3,9 +3,10 @@
 
 [![Latest Stable Version](https://poser.pugx.org/myerscode/laravel-taxonomies/v/stable)](https://packagist.org/packages/myerscode/laravel-taxonomies)
 [![Total Downloads](https://poser.pugx.org/myerscode/laravel-taxonomies/downloads)](https://packagist.org/packages/myerscode/laravel-taxonomies)
-[![License](https://poser.pugx.org/myerscode/laravel-taxonomies/license)](https://packagist.org/packages/myerscode/laravel-taxonomies)
-
-
+[![PHP Version Require](http://poser.pugx.org/myerscode/laravel-taxonomies/require/php)](https://packagist.org/packages/myerscode/laravel-taxonomies)
+[![License](https://poser.pugx.org/myerscode/laravel-taxonomies/license)](https://github.com/myerscode/laravel-taxonomies/blob/main/LICENSE)
+[![Tests](https://github.com/myerscode/laravel-taxonomies/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/myerscode/laravel-taxonomies/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/myerscode/laravel-taxonomies/graph/badge.svg)](https://codecov.io/gh/myerscode/laravel-taxonomies)
 
 ## Why is this package helpful?
 
@@ -18,7 +19,10 @@ This package allow you to create taxonomies and terms and relate them to Laravel
 
 Unlike other popular tag packages for Laravel this one supports MariaDB.
 
+## Requirements
 
+- PHP ^8.5
+- Laravel ^13.0
 
 ## Install
 
@@ -28,13 +32,9 @@ You can install this package via composer:
 composer require myerscode/laravel-taxonomies
 ```
 
-
-
 ## Setup
 
-If using Laravel 5.5 or above, the service provider will automatically be registered.
-
-If using Laravel 5.4 add `Myerscode\Laravel\Taxonomies\ServiceProvider` to the `providers` array in `config/app.php`
+The service provider will automatically be registered via package discovery.
 
 Publish the migration with:
 ```bash
@@ -43,8 +43,6 @@ php artisan vendor:publish --provider="Myerscode\Laravel\Taxonomies\ServiceProvi
 
 After the migration has been published, run the migrations to create the `tags`, `taxonomies` and `taggables` tables.
 
-
-
 ## [Usage](docs/model.md)
 
 To make an Eloquent model taggable just add the `\Myerscode\Laravel\Taxonomies\HasTaxonomy` trait to it:
@@ -52,7 +50,7 @@ To make an Eloquent model taggable just add the `\Myerscode\Laravel\Taxonomies\H
 class Post extends Model
 {
     use \Myerscode\Laravel\Taxonomies\HasTaxonomy;
-    
+
     ...
 }
 ```
