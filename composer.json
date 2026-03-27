@@ -28,6 +28,7 @@
   ],
   "require": {
     "php": "^8.5",
+    "ext-fileinfo": "*",
     "illuminate/database": "^13.0",
     "illuminate/support": "^13.0",
     "myerscode/utilities-strings": "^2026.0",
