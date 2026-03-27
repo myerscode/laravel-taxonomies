@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'CalVer version (e.g. 2026.0.0)'
+        description: 'SemVer version (e.g. 9.0.0)'
         required: true
         type: string
   push:
     tags:
-      - '[0-9][0-9][0-9][0-9].*'
+      - '[0-9]+.[0-9]+.[0-9]+'
 
 permissions:
   contents: read
@@ -35,10 +35,10 @@ jobs:
             echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Validate CalVer format
+      - name: Validate SemVer format
         run: |
-          if ! echo "${{ steps.version.outputs.tag }}" | grep -qE '^[0-9]{4}\.[0-9]+\.[0-9]+$'; then
-            echo "Error: Version must be in CalVer format YYYY.MINOR.PATCH (e.g. 2026.0.0)"
+          if ! echo "${{ steps.version.outputs.tag }}" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Error: Version must be in SemVer format MAJOR.MINOR.PATCH (e.g. 9.0.0)"
             exit 1
           fi
 
@@ -51,7 +51,7 @@ jobs:
       - name: Get previous tag
         id: previous
         run: |
-          PREVIOUS=$(git tag --sort=-v:refname | grep -E '^[0-9]{4}\.' | grep -v "^${{ steps.version.outputs.tag }}$" | head -1)
+          PREVIOUS=$(git tag --sort=-v:refname | grep -E '^[0-9]+\.' | grep -v "^${{ steps.version.outputs.tag }}$" | head -1)
           echo "tag=$PREVIOUS" >> "$GITHUB_OUTPUT"
 
       - name: Generate changelog
