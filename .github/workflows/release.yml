@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -85,6 +86,7 @@ jobs:
       - name: Commit updated CHANGELOG
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
           commit_message: "docs: update CHANGELOG for ${{ steps.version.outputs.tag }}"
           file_pattern: CHANGELOG.md
