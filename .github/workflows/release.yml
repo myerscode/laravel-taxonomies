@@ -63,7 +63,7 @@ jobs:
           toTag: ${{ steps.previous.outputs.tag }}
           excludeTypes: build,docs,other,style,ci,chore
           useGitmojis: false
-          writeToFile: true
+          writeToFile: false
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
@@ -71,6 +71,16 @@ jobs:
           tag_name: ${{ steps.version.outputs.tag }}
           name: ${{ steps.version.outputs.tag }}
           body: ${{ steps.changelog.outputs.changes }}
+
+      - name: Write changelog to file
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          fromTag: ${{ steps.version.outputs.tag }}
+          toTag: ${{ steps.previous.outputs.tag }}
+          excludeTypes: build,docs,other,style,ci,chore
+          useGitmojis: false
+          writeToFile: true
 
       - name: Commit updated CHANGELOG
         uses: stefanzweifel/git-auto-commit-action@v7

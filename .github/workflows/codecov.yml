@@ -31,7 +31,7 @@ jobs:
       - name: Run Test Suite
         run: vendor/bin/phpunit --testdox --coverage-clover ./coverage.xml
       - name: Code Coverage
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage.xml
