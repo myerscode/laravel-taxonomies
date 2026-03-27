@@ -18,7 +18,7 @@ final class TaxonomyTest extends TestCase
         $this->taxonomy = Taxonomy::create(['name' => 'Foo']);
     }
 
-    public function testAddingMultipleTermsToTaxonomy(): void
+    public function test_adding_multiple_terms_to_taxonomy(): void
     {
         $this->taxonomy->addTerms(['Foo', 'Bar']);
         $this->taxonomy->refresh();
@@ -29,7 +29,7 @@ final class TaxonomyTest extends TestCase
         $this->assertEquals($terms->toArray(), $this->taxonomy->terms->toArray());
     }
 
-    public function testAddingTermToTaxonomy(): void
+    public function test_adding_term_to_taxonomy(): void
     {
 
         $this->taxonomy->addTerm('Test');
@@ -41,7 +41,7 @@ final class TaxonomyTest extends TestCase
         $this->assertEquals($term->toArray(), $this->taxonomy->terms->first()->toArray());
     }
 
-    public function testAddTaxonomy(): void
+    public function test_add_taxonomy(): void
     {
         Taxonomy::add('Foo');
         Taxonomy::add('Bar');
@@ -51,7 +51,7 @@ final class TaxonomyTest extends TestCase
         $this->assertCount(3, Taxonomy::all());
     }
 
-    public function testAttachTermToTaxonomy(): void
+    public function test_attach_term_to_taxonomy(): void
     {
 
         $term = Term::firstOrCreate(['name' => 'Test']);
@@ -63,14 +63,14 @@ final class TaxonomyTest extends TestCase
         $this->assertEquals($term->toArray(), $this->taxonomy->terms->first()->toArray());
     }
 
-    public function testCreateTaxonomy(): void
+    public function test_create_taxonomy(): void
     {
         Taxonomy::create(['name' => 'Bar']);
 
         $this->assertCount(2, Taxonomy::all());
     }
 
-    public function testEnsureTaxMovesWhenAttachedToTaxonomy(): void
+    public function test_ensure_tax_moves_when_attached_to_taxonomy(): void
     {
 
         $term = Term::firstOrCreate(['name' => 'Test']);

@@ -7,6 +7,8 @@ namespace Tests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Myerscode\Laravel\Taxonomies\ServiceProvider;
+use Myerscode\Laravel\Taxonomies\Taxonomy;
+use Myerscode\Laravel\Taxonomies\Term;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -32,28 +34,25 @@ class TestCase extends Orchestra
         ], 'cy');
     }
 
-    protected function defineDatabaseMigrations()
+    protected function defineDatabaseMigrations(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/../src/Stubs/migrations');
         $this->loadMigrationsFrom(__DIR__ . '/Support/migrations');
     }
 
-    /**
-     * @param \Illuminate\Foundation\Application $app
-     */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('taxonomies', [
             'taxonomy' => [
-                'model' => \Myerscode\Laravel\Taxonomies\Taxonomy::class,
+                'model' => Taxonomy::class,
             ],
             'term' => [
-                'model' => \Myerscode\Laravel\Taxonomies\Term::class,
+                'model' => Term::class,
             ],
         ]);
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             ServiceProvider::class,

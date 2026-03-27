@@ -9,7 +9,7 @@ use Myerscode\Laravel\Taxonomies\Term;
 
 final class LocalisationTest extends TestCase
 {
-    public function testIsTranslatedToDefaultLocal(): void
+    public function test_is_translated_to_default_local(): void
     {
         $model = Term::add('Foo Bar');
         $taxonomy = Taxonomy::add('Hello World');
@@ -20,7 +20,7 @@ final class LocalisationTest extends TestCase
         $this->assertEquals('Helo Byd', $taxonomy->translate()->name);
     }
 
-    public function testTaxonomyIsTranslated(): void
+    public function test_taxonomy_is_translated(): void
     {
         $model = Taxonomy::add('Hello World');
 
@@ -33,7 +33,7 @@ final class LocalisationTest extends TestCase
         $this->assertEquals('Hello World', $model->name);
     }
 
-    public function testTaxonomyReturnsDefaultForMissingTranslation(): void
+    public function test_taxonomy_returns_default_for_missing_translation(): void
     {
         $model = Taxonomy::add('A Random Taxonomy');
 
@@ -42,7 +42,7 @@ final class LocalisationTest extends TestCase
         $this->assertEquals('A Random Taxonomy', $translated->name);
     }
 
-    public function testTermIsTranslated(): void
+    public function test_term_is_translated(): void
     {
         $model = Term::add('Foo Bar');
 
@@ -55,7 +55,7 @@ final class LocalisationTest extends TestCase
         $this->assertEquals('Foo Bar', $model->name);
     }
 
-    public function testTermReturnsDefaultForMissingTranslation(): void
+    public function test_term_returns_default_for_missing_translation(): void
     {
         $model = Term::add('A Random Term');
 

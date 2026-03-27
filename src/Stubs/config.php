@@ -1,10 +1,13 @@
 <?php
 
+use Myerscode\Laravel\Taxonomies\Taxonomy;
+use Myerscode\Laravel\Taxonomies\Term;
+
 return [
     'taxonomy' => [
-        'model' => \Myerscode\Laravel\Taxonomies\Taxonomy::class,
+        'model' => Taxonomy::class,
     ],
     'term' => [
-        'model' => \Myerscode\Laravel\Taxonomies\Term::class,
+        'model' => Term::class,
     ],
 ];

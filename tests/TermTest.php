@@ -11,7 +11,7 @@ use TypeError;
 
 final class TermTest extends TestCase
 {
-    public function testAddTerm(): void
+    public function test_add_term(): void
     {
         Term::add('Foo');
         Term::add(['name' => 'Bar']);
@@ -19,7 +19,7 @@ final class TermTest extends TestCase
         $this->assertCount(2, Term::all());
     }
 
-    public function testAddTermToTaxonomy(): void
+    public function test_add_term_to_taxonomy(): void
     {
         Term::addToTaxonomy('Hello', 'World');
         Term::addToTaxonomy('Foo', 'Bar');
@@ -27,7 +27,7 @@ final class TermTest extends TestCase
         $this->assertCount(2, Term::all());
     }
 
-    public function testAddTermToTaxonomyWithAssociativeArray(): void
+    public function test_add_term_to_taxonomy_with_associative_array(): void
     {
         $result = Term::addToTaxonomy(['name' => 'Hello'], 'World');
 
@@ -39,7 +39,7 @@ final class TermTest extends TestCase
         $this->assertEquals('World', $term->taxonomy->name);
     }
 
-    public function testAddTermToTaxonomyWithIndexedArray(): void
+    public function test_add_term_to_taxonomy_with_indexed_array(): void
     {
         $result = Term::addToTaxonomy(['Hello', 'World'], 'MyTaxonomy');
 
@@ -47,7 +47,7 @@ final class TermTest extends TestCase
         $this->assertCount(2, Term::all());
     }
 
-    public function testAddTermWithAlternateSlug(): void
+    public function test_add_term_with_alternate_slug(): void
     {
         Term::add(['slug' => 'bar', 'name' => 'Foo']);
         $term = Term::findBySlug('bar');
@@ -59,7 +59,7 @@ final class TermTest extends TestCase
         $this->assertEquals(null, $invalidTerm);
     }
 
-    public function testFindTermByName(): void
+    public function test_find_term_by_name(): void
     {
         Term::add('Hello World');
         Term::add('Foo Bar');
@@ -69,7 +69,7 @@ final class TermTest extends TestCase
         $this->assertEquals('hello-world', $term->slug);
     }
 
-    public function testFindTermBySlug(): void
+    public function test_find_term_by_slug(): void
     {
         Term::add('Hello');
         Term::add('World');
@@ -79,7 +79,7 @@ final class TermTest extends TestCase
         $this->assertEquals('Hello', $term->name);
     }
 
-    public function testTermBelongsToTaxonomy(): void
+    public function test_term_belongs_to_taxonomy(): void
     {
         Term::addToTaxonomy('Hello', 'World');
         $term = Term::findByName('Hello');
@@ -92,7 +92,7 @@ final class TermTest extends TestCase
         $this->assertNull($term->taxonomy);
     }
 
-    public function testUnsupportedTermDataThrowsException(): void
+    public function test_unsupported_term_data_throws_exception(): void
     {
         $this->expectException(TypeError::class);
         Term::add(new stdClass());

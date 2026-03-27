@@ -18,7 +18,7 @@ final class HasTaxonomyTest extends TestCase
         $this->post = Post::create(['slug' => 'hello-world', 'title' => 'Hello World']);
     }
 
-    public function testModelCanAddMultipleTerms(): void
+    public function test_model_can_add_multiple_terms(): void
     {
         $this->post->addTerms(['Foo', 'Bar']);
 
@@ -27,7 +27,7 @@ final class HasTaxonomyTest extends TestCase
         $this->assertEquals(['foo', 'bar'], $this->post->terms->pluck(['slug'])->toArray());
     }
 
-    public function testModelCanAddTerm(): void
+    public function test_model_can_add_term(): void
     {
         $this->post->addTerm('Foo');
 
@@ -36,7 +36,7 @@ final class HasTaxonomyTest extends TestCase
         $this->assertEquals(['foo'], $this->post->terms->pluck(['slug'])->toArray());
     }
 
-    public function testModelCanAddTermToTaxonomy(): void
+    public function test_model_can_add_term_to_taxonomy(): void
     {
         $this->post->addTerm('Hello', 'Foo Bar');
         $this->post->addTerm('World', 'Foo Bar');
@@ -47,7 +47,7 @@ final class HasTaxonomyTest extends TestCase
         $this->assertCount(2, $taxonomy->terms);
     }
 
-    public function testModelCanAddTermToTaxonomyByInstance(): void
+    public function test_model_can_add_term_to_taxonomy_by_instance(): void
     {
         $taxonomy = Taxonomy::findOrAdd('Foo Bar');
         $this->post->addTerm('Hello', $taxonomy);
@@ -57,7 +57,7 @@ final class HasTaxonomyTest extends TestCase
         $this->assertCount(2, $taxonomy->terms);
     }
 
-    public function testModelCanAddTermToTaxonomyByItsId(): void
+    public function test_model_can_add_term_to_taxonomy_by_its_id(): void
     {
         $taxonomy = Taxonomy::findOrAdd('Foo Bar');
         $this->post->addTerm('Hello', 1);
@@ -67,7 +67,7 @@ final class HasTaxonomyTest extends TestCase
         $this->assertCount(2, $taxonomy->terms);
     }
 
-    public function testModelCanAddTermToTaxonomyBySlug(): void
+    public function test_model_can_add_term_to_taxonomy_by_slug(): void
     {
         $this->post->addTerm('Hello', 'foo-bar');
         $this->post->addTerm('World', 'foo-bar');
@@ -79,7 +79,7 @@ final class HasTaxonomyTest extends TestCase
     }
 
 
-    public function testModelCanFindByAllTerms(): void
+    public function test_model_can_find_by_all_terms(): void
     {
         $model1 = Post::create(['slug' => 'test-one', 'title' => 'Test One']);
         $model2 = Post::create(['slug' => 'test-two', 'title' => 'Test Two']);
@@ -96,7 +96,7 @@ final class HasTaxonomyTest extends TestCase
         $this->assertCount(0, Post::withAllTerms(['Hello', 'World', 'Foo', 'Bar']));
     }
 
-    public function testModelCanFindByAllTermsInTaxonomy(): void
+    public function test_model_can_find_by_all_terms_in_taxonomy(): void
     {
         $model1 = Post::create(['slug' => 'test-one', 'title' => 'Test One']);
         $model2 = Post::create(['slug' => 'test-two', 'title' => 'Test Two']);
@@ -118,7 +118,7 @@ final class HasTaxonomyTest extends TestCase
         $this->assertCount(1, Post::withAllTerms(['Foo', 'Bar'], 'aaa'));
     }
 
-    public function testModelCanFindByAnyTerms(): void
+    public function test_model_can_find_by_any_terms(): void
     {
         $model1 = Post::create(['slug' => 'test-one', 'title' => 'Test One']);
         $model2 = Post::create(['slug' => 'test-two', 'title' => 'Test Two']);
@@ -134,7 +134,7 @@ final class HasTaxonomyTest extends TestCase
         $this->assertCount(2, Post::withAnyTerms(['Hello', 'World']));
     }
 
-    public function testModelCanFindByAnyTermsFromTaxonomy(): void
+    public function test_model_can_find_by_any_terms_from_taxonomy(): void
     {
         $model1 = Post::create(['slug' => 'test-one', 'title' => 'Test One']);
         $model2 = Post::create(['slug' => 'test-two', 'title' => 'Test Two']);
@@ -153,7 +153,7 @@ final class HasTaxonomyTest extends TestCase
         $this->assertCount(3, Post::withAnyTerms(['Foo', 'Bar']));
     }
 
-    public function testModelCanRemoveTerms(): void
+    public function test_model_can_remove_terms(): void
     {
         $this->post->addTerms(['Foo', 'Bar', 'Hello', 'World']);
         $this->assertCount(4, $this->post->terms);
@@ -167,7 +167,7 @@ final class HasTaxonomyTest extends TestCase
         $this->assertCount(1, $this->post->terms);
     }
 
-    public function testModelCanSyncTerms(): void
+    public function test_model_can_sync_terms(): void
     {
         $this->post->addTerms(['Foo', 'Bar', 'Hello', 'World']);
         $this->assertCount(4, $this->post->terms);

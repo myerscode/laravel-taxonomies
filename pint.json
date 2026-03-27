@@ -37,6 +37,9 @@
             ],
             "sort_algorithm": "alpha"
         },
+        "php_unit_method_casing": {
+            "case": "snake_case"
+        },
         "single_quote": true,
         "trailing_comma_in_multiline": {
             "elements": ["arrays", "arguments", "parameters"]
