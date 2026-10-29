@@ -1,0 +1,19 @@
+# Calls the shared myerscode/workflows Dependabot auto-merge workflow.
+name: Dependabot auto-merge
+
+on:
+  pull_request_target:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    uses: myerscode/workflows/.github/workflows/dependabot-auto-merge.yml@v1
+    with:
+      merge-method: squash
+      highest-auto-merge: minor
+      approve: true
+      resolve-conflicts: recreate
+      ignore-indirect: true
