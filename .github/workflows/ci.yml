@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  push:
+    branches: [ main, develop, feature/** ]
+  pull_request:
+    branches: [ main, develop, feature/** ]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    uses: myerscode/workflows/.github/workflows/php-tests.yml@v1
+    with:
+      php-versions: "['8.5']"
+      os: "['ubuntu-latest', 'macos-latest', 'windows-latest']"
+      extensions: "fileinfo, pdo_sqlite"
+
+  lint:
+    uses: myerscode/workflows/.github/workflows/php-lint.yml@v1
+    with:
+      php-version: "8.5"
+      extensions: "fileinfo, pdo_sqlite"
+
+  audit:
+    uses: myerscode/workflows/.github/workflows/php-security-audit.yml@v1
+    with:
+      php-version: "8.5"
+      extensions: "fileinfo, pdo_sqlite"
+
+  coverage:
+    uses: myerscode/workflows/.github/workflows/php-coverage.yml@v1
+    with:
+      php-version: "8.5"
+      extensions: "fileinfo, pdo_sqlite"
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
