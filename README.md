@@ -5,7 +5,7 @@
 [![Total Downloads](https://poser.pugx.org/myerscode/laravel-taxonomies/downloads)](https://packagist.org/packages/myerscode/laravel-taxonomies)
 [![PHP Version Require](http://poser.pugx.org/myerscode/laravel-taxonomies/require/php)](https://packagist.org/packages/myerscode/laravel-taxonomies)
 [![License](https://poser.pugx.org/myerscode/laravel-taxonomies/license)](https://github.com/myerscode/laravel-taxonomies/blob/main/LICENSE)
-[![Tests](https://github.com/myerscode/laravel-taxonomies/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/myerscode/laravel-taxonomies/actions/workflows/tests.yml)
+[![Tests](https://github.com/myerscode/laravel-taxonomies/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/myerscode/laravel-taxonomies/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/myerscode/laravel-taxonomies/graph/badge.svg)](https://codecov.io/gh/myerscode/laravel-taxonomies)
 
 ## Why is this package helpful?
