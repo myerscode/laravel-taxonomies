@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [13.0.1] - 2026-10-31
+### New Features
+- [`57ca619`](https://github.com/myerscode/laravel-taxonomies/commit/57ca619f4b4558279a3d0cfa8819db97d2ee8870) - **ci**: add shared dependabot auto-merge *(PR [#8](https://github.com/myerscode/laravel-taxonomies/pull/8) by [@oniice](https://github.com/oniice))*
+
+
 ## [13.0.0] - 2026-03-27
 ### New Features
 - [`9918d5d`](https://github.com/myerscode/laravel-taxonomies/commit/9918d5ddabd1b80a8274393ea84434a17698e9cd) - added github workflows *(commit by [@oniice](https://github.com/oniice))*
@@ -44,3 +49,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 * Updated dependencies for PHP 8 compatibility
   * Min requirement reverted to PHP 7.3 as per Laravel
 [13.0.0]: https://github.com/myerscode/laravel-taxonomies/compare/8.1.0...13.0.0
+[13.0.1]: https://github.com/myerscode/laravel-taxonomies/compare/13.0.0...13.0.1
